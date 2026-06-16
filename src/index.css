@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Roboto+Condensed:wght@300;400;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "EB Garamond", "Times New Roman", serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Roboto Condensed", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-brand-primary: #9a1866;
+  --color-brand-secondary: #85346a;
+  --color-brand-gray: #f6f6f6;
+  --color-brand-black-body: #222222;
+  --color-brand-white: #ffffff;
+}
+
+:root {
+  --text-primary: #222222;
+  --color-primary: #9a1866;
+  --color-secondary: #85346a;
+  --bg-parchment: #f6f6f6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f6f6f6;
+  color: #222222;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Brand-accented scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f6f6f6;
+}
+::-webkit-scrollbar-thumb {
+  background: #85346a;
+  border: 2px solid #f6f6f6;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9a1866;
+}
+
+/* Offset anchored sections for the sticky header */
+[id] {
+  scroll-margin-top: 6rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
