@@ -48,6 +48,25 @@ All content lives in `src/data.ts`, generated **verbatim** from the source files
 npm run gen      # reads scripts/*.xlsx + scripts/*.docx -> src/data.ts
 ```
 
+## Deploy (Cloudflare Pages)
+
+This is a static site, so hosting is just "build and serve the `dist/` folder."
+Cloudflare Pages connects to the GitHub repo and redeploys on every push.
+
+**Build settings** (entered once in the Cloudflare dashboard):
+
+| Setting                  | Value           |
+| ------------------------ | --------------- |
+| Framework preset         | `Vite`          |
+| Build command            | `npm run build` |
+| Build output directory   | `dist`          |
+| Production branch        | your main branch |
+
+Node version is pinned to 20 via `.node-version`, and `public/_redirects`
+(`/* /index.html 200`) keeps every path resolving to the app. No backend,
+environment variables, or Python are needed at build time — `src/data.ts` is
+already committed.
+
 ## License
 
 Content © 2026 Library Futures / The Engelberg Center on Innovation Law & Policy,
