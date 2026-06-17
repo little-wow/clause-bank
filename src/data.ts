@@ -1182,6 +1182,8 @@ export const README_SECTIONS: ReadmeSection[] = [
   }
 ];
 
+export const THEME_INDEX_TITLE = "Theme Index";
+export const THEME_INDEX_INTRO = "A quick reference to clauses organized by thematic group. Use the Clause ID to find each clause in the Clause Bank tab.";
 export const THEME_INDEX: ThemeIndexEntry[] = [
   {
     "theme": "Grant and Scope",

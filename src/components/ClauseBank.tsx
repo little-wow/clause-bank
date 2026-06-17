@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CLAUSES,
   THEME_ORDER,
@@ -34,7 +34,7 @@ function CopyButton({ text, label }: { text: string; label: string }) {
   return (
     <button
       onClick={onCopy}
-      className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 hover:text-[#9a1866] transition-colors"
+      className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 hover:text-[#b41f6e] transition-colors"
       title={`Copy the ${label} text`}
     >
       {copied ? (
@@ -60,10 +60,10 @@ const VERSION_STYLES = {
   },
   library: {
     label: "Pro-Library Version",
-    head: "text-[#9a1866]",
-    ring: "border-[#9a1866]/25",
-    bg: "bg-[#9a1866]/[0.04]",
-    dot: "bg-[#9a1866]",
+    head: "text-[#b41f6e]",
+    ring: "border-[#b41f6e]/25",
+    bg: "bg-[#b41f6e]/[0.04]",
+    dot: "bg-[#b41f6e]",
   },
   fallback: {
     label: "Reasonable Fallback",
@@ -120,7 +120,7 @@ function PriorityBadges({ priorities }: { priorities: ClausePriorities }) {
             key={k}
             className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border ${
               high
-                ? "bg-[#9a1866]/10 text-[#9a1866] border-[#9a1866]/20"
+                ? "bg-[#b41f6e]/10 text-[#b41f6e] border-[#b41f6e]/20"
                 : "bg-slate-100 text-slate-600 border-slate-200"
             }`}
             title={`${PRIORITY_LABELS[k]}: ${high ? "High" : "Medium"} priority`}
@@ -149,7 +149,7 @@ function ClauseCard({
     <div
       id={clause.id}
       className={`bg-white border rounded-2xl shadow-sm transition-colors ${
-        open ? "border-[#9a1866]/30" : "border-slate-200/60 hover:border-slate-300"
+        open ? "border-[#b41f6e]/30" : "border-slate-200/60 hover:border-slate-300"
       }`}
     >
       {/* Header (click to toggle) */}
@@ -158,7 +158,7 @@ function ClauseCard({
         className="w-full text-left p-5 sm:p-6 flex items-start gap-4"
         aria-expanded={open}
       >
-        <span className="flex-shrink-0 font-mono text-xs font-bold text-white bg-[#9a1866] rounded-lg px-2.5 py-1.5 mt-0.5">
+        <span className="flex-shrink-0 font-mono text-xs font-bold text-white bg-[#b41f6e] rounded-lg px-2.5 py-1.5 mt-0.5">
           {clause.id}
         </span>
         <div className="flex-grow min-w-0 space-y-2">
@@ -179,7 +179,7 @@ function ClauseCard({
         </div>
         <ChevronDown
           className={`flex-shrink-0 h-5 w-5 text-slate-400 transition-transform duration-300 mt-1 ${
-            open ? "rotate-180 text-[#9a1866]" : ""
+            open ? "rotate-180 text-[#b41f6e]" : ""
           }`}
         />
       </button>
@@ -207,7 +207,7 @@ function ClauseCard({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="rounded-xl bg-slate-50/80 border border-slate-100 p-4">
-              <h4 className="flex items-center gap-1.5 font-display text-[11px] font-bold uppercase tracking-wider text-[#9a1866] mb-2">
+              <h4 className="flex items-center gap-1.5 font-display text-[11px] font-bold uppercase tracking-wider text-[#b41f6e] mb-2">
                 <Eye className="h-3.5 w-3.5" /> Why?
               </h4>
               <p className="text-[13px] leading-relaxed text-slate-600">{clause.why}</p>
@@ -224,9 +224,9 @@ function ClauseCard({
 
           {clause.companionRef && (
             <div className="flex items-center gap-2 text-xs text-slate-500">
-              <BookMarked className="h-3.5 w-3.5 text-[#85346a]" />
+              <BookMarked className="h-3.5 w-3.5 text-[#6e2c6a]" />
               Full discussion in the Companion Guide —{" "}
-              <span className="font-semibold text-[#85346a]">{clause.companionRef}</span>
+              <span className="font-semibold text-[#6e2c6a]">{clause.companionRef}</span>
             </div>
           )}
         </div>
@@ -237,11 +237,33 @@ function ClauseCard({
 
 /* -------------------------------------------------------------- container */
 
-export default function ClauseBank() {
+export default function ClauseBank({
+  focusId,
+  onFocusHandled,
+}: {
+  focusId?: string | null;
+  onFocusHandled?: () => void;
+} = {}) {
   const [query, setQuery] = useState("");
   const [theme, setTheme] = useState<string>("All");
   const [priority, setPriority] = useState<keyof ClausePriorities | "All">("All");
   const [open, setOpen] = useState<Set<string>>(new Set());
+
+  // When arriving via a Theme Index link, clear filters, open that clause, scroll to it.
+  useEffect(() => {
+    if (!focusId) return;
+    setQuery("");
+    setTheme("All");
+    setPriority("All");
+    setOpen((prev) => new Set(prev).add(focusId));
+    const t = window.setTimeout(() => {
+      const el = document.getElementById(focusId);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      onFocusHandled?.();
+    }, 80);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusId]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -302,7 +324,7 @@ export default function ClauseBank() {
             {CLAUSES.length} negotiable clauses · three versions each
           </p>
         </div>
-        <div className="text-xs text-[#85346a] bg-[#85346a]/10 py-1.5 px-3 rounded-lg font-sans font-semibold border border-[#85346a]/20 self-start md:self-auto">
+        <div className="text-xs text-[#6e2c6a] bg-[#6e2c6a]/10 py-1.5 px-3 rounded-lg font-sans font-semibold border border-[#6e2c6a]/20 self-start md:self-auto">
           Compare vendor language against library-favorable alternatives
         </div>
       </div>
@@ -315,7 +337,7 @@ export default function ClauseBank() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search clauses — topic, language, clause ID (e.g. perpetual access, ILL, GS-AU)…"
-          className="w-full bg-white border border-slate-200 rounded-xl pl-12 pr-11 py-3.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#9a1866]/30 focus:border-[#9a1866]/40 shadow-sm"
+          className="w-full bg-white border border-slate-200 rounded-xl pl-12 pr-11 py-3.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#b41f6e]/30 focus:border-[#b41f6e]/40 shadow-sm"
         />
         {query && (
           <button
@@ -371,7 +393,7 @@ export default function ClauseBank() {
       {/* Toolbar */}
       <div className="flex items-center justify-between text-xs text-slate-500">
         <span>
-          Showing <strong className="text-[#9a1866]">{filtered.length}</strong> of{" "}
+          Showing <strong className="text-[#b41f6e]">{filtered.length}</strong> of{" "}
           {CLAUSES.length} clauses
           {hasFilters && (
             <button
@@ -380,18 +402,18 @@ export default function ClauseBank() {
                 setTheme("All");
                 setPriority("All");
               }}
-              className="ml-3 text-[#9a1866] hover:underline font-semibold"
+              className="ml-3 text-[#b41f6e] hover:underline font-semibold"
             >
               Reset filters
             </button>
           )}
         </span>
         <div className="flex items-center gap-3">
-          <button onClick={expandAll} className="hover:text-[#9a1866] font-semibold">
+          <button onClick={expandAll} className="hover:text-[#b41f6e] font-semibold">
             Expand all
           </button>
           <span className="text-slate-300">|</span>
-          <button onClick={collapseAll} className="hover:text-[#9a1866] font-semibold">
+          <button onClick={collapseAll} className="hover:text-[#b41f6e] font-semibold">
             Collapse all
           </button>
         </div>
@@ -409,7 +431,7 @@ export default function ClauseBank() {
           {grouped.map((group) => (
             <section key={group.theme} className="space-y-3">
               <h3 className="flex items-center gap-2 font-display text-sm font-bold uppercase tracking-wider text-slate-500 sticky top-[5.25rem] bg-[#f6f6f6]/95 backdrop-blur-sm py-1.5 z-10">
-                <span className="h-4 w-1 rounded-full bg-[#9a1866] inline-block" />
+                <span className="h-4 w-1 rounded-full bg-[#b41f6e] inline-block" />
                 {group.theme}
                 <span className="font-mono text-[10px] text-slate-400 normal-case">
                   ({group.items.length})
@@ -451,8 +473,8 @@ function FilterChip({
         small ? "px-2.5 py-1 text-[11px]" : "px-3.5 py-1.5 text-xs"
       } ${
         active
-          ? "bg-[#9a1866] text-white border-[#9a1866] shadow-sm shadow-[#9a1866]/20"
-          : "bg-white text-slate-600 border-slate-200 hover:border-[#9a1866]/40 hover:text-[#9a1866]"
+          ? "bg-[#b41f6e] text-white border-[#b41f6e] shadow-sm shadow-[#b41f6e]/20"
+          : "bg-white text-slate-600 border-slate-200 hover:border-[#b41f6e]/40 hover:text-[#b41f6e]"
       }`}
     >
       {label}

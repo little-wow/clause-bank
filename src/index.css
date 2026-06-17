@@ -6,8 +6,8 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Roboto Condensed", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --color-brand-primary: #9a1866;
-  --color-brand-secondary: #85346a;
+  --color-brand-primary: #b41f6e;
+  --color-brand-secondary: #6e2c6a;
   --color-brand-gray: #f6f6f6;
   --color-brand-black-body: #222222;
   --color-brand-white: #ffffff;
@@ -15,8 +15,8 @@
 
 :root {
   --text-primary: #222222;
-  --color-primary: #9a1866;
-  --color-secondary: #85346a;
+  --color-primary: #b41f6e;
+  --color-secondary: #6e2c6a;
   --bg-parchment: #f6f6f6;
 }
 
@@ -40,12 +40,12 @@ body {
   background: #f6f6f6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #85346a;
+  background: #6e2c6a;
   border: 2px solid #f6f6f6;
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #9a1866;
+  background: #b41f6e;
 }
 
 /* Offset anchored sections for the sticky header */

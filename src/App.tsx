@@ -7,22 +7,33 @@ import CompanionGuide from "./components/CompanionGuide";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>("overview");
+  const [focusClause, setFocusClause] = useState<string | null>(null);
+
+  const openClause = (id: string) => {
+    setFocusClause(id);
+    setActiveTab("clauses");
+  };
 
   const renderActiveTab = () => {
     switch (activeTab) {
       case "overview":
-        return <Overview goTo={setActiveTab} />;
+        return <Overview goTo={setActiveTab} openClause={openClause} />;
       case "clauses":
-        return <ClauseBank />;
+        return (
+          <ClauseBank
+            focusId={focusClause}
+            onFocusHandled={() => setFocusClause(null)}
+          />
+        );
       case "companion":
         return <CompanionGuide />;
       default:
-        return <Overview goTo={setActiveTab} />;
+        return <Overview goTo={setActiveTab} openClause={openClause} />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#f6f6f6] flex flex-col justify-between selection:bg-[#9a1866]/10 selection:text-[#9a1866]">
+    <div className="min-h-screen bg-[#f6f6f6] flex flex-col justify-between selection:bg-[#b41f6e]/10 selection:text-[#b41f6e]">
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <main className="flex-grow w-full">

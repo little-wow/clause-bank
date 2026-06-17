@@ -7,6 +7,9 @@ import {
   CLAUSES,
   PRIORITY_LABELS,
   PRIORITY_KEYS,
+  THEME_INDEX,
+  THEME_INDEX_TITLE,
+  THEME_INDEX_INTRO,
 } from "../data";
 import type { TabId } from "./Navbar";
 import {
@@ -15,10 +18,13 @@ import {
   AlertTriangle,
   ArrowRight,
   ShieldQuestion,
+  ListTree,
+  ChevronRight,
 } from "lucide-react";
 
 interface OverviewProps {
   goTo: (tab: TabId) => void;
+  openClause: (id: string) => void;
 }
 
 const SHORT_LABEL = /^([A-Z][A-Za-z' ?]{2,45}):\s+(.+)$/;
@@ -29,7 +35,7 @@ function Paragraph({ text }: { text: string }): JSX.Element {
   if (m) {
     return (
       <p className="text-sm sm:text-[0.95rem] leading-relaxed text-slate-600">
-        <span className="font-semibold text-[#9a1866]">{m[1]}:</span> {m[2]}
+        <span className="font-semibold text-[#b41f6e]">{m[1]}:</span> {m[2]}
       </p>
     );
   }
@@ -38,7 +44,7 @@ function Paragraph({ text }: { text: string }): JSX.Element {
   );
 }
 
-export default function Overview({ goTo }: OverviewProps) {
+export default function Overview({ goTo, openClause }: OverviewProps) {
   const intro = README_SECTIONS.find((s) => s.heading === "Intro");
   const important = README_SECTIONS.find((s) => s.heading === "IMPORTANT!");
   const about = README_SECTIONS.find((s) => s.heading === "About");
@@ -50,7 +56,7 @@ export default function Overview({ goTo }: OverviewProps) {
     <div className="space-y-10 fade-in">
       {/* Hero */}
       <section className="space-y-5 border-b border-slate-100 pb-8">
-        <span className="inline-block text-[11px] font-mono uppercase tracking-widest text-[#85346a] bg-[#85346a]/10 border border-[#85346a]/20 rounded-full px-3 py-1">
+        <span className="inline-block text-[11px] font-mono uppercase tracking-widest text-[#6e2c6a] bg-[#6e2c6a]/10 border border-[#6e2c6a]/20 rounded-full px-3 py-1">
           Library Futures · Negotiation Reference
         </span>
         <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-[#222222] tracking-tight leading-[1.05]">
@@ -69,7 +75,7 @@ export default function Overview({ goTo }: OverviewProps) {
         <div className="flex flex-wrap gap-3 pt-2">
           <button
             onClick={() => goTo("clauses")}
-            className="inline-flex items-center gap-2 bg-[#9a1866] text-white font-semibold text-sm px-5 py-3 rounded-xl shadow-md shadow-[#9a1866]/20 hover:bg-[#85346a] transition-colors"
+            className="inline-flex items-center gap-2 bg-[#b41f6e] text-white font-semibold text-sm px-5 py-3 rounded-xl shadow-md shadow-[#b41f6e]/20 hover:bg-[#6e2c6a] transition-colors"
           >
             <Layers className="h-4 w-4" />
             Open the Clause Bank
@@ -77,7 +83,7 @@ export default function Overview({ goTo }: OverviewProps) {
           </button>
           <button
             onClick={() => goTo("companion")}
-            className="inline-flex items-center gap-2 bg-white text-[#9a1866] font-semibold text-sm px-5 py-3 rounded-xl border border-[#9a1866]/20 hover:bg-[#9a1866]/5 transition-colors"
+            className="inline-flex items-center gap-2 bg-white text-[#b41f6e] font-semibold text-sm px-5 py-3 rounded-xl border border-[#b41f6e]/20 hover:bg-[#b41f6e]/5 transition-colors"
           >
             <FileText className="h-4 w-4" />
             Read the Companion Guide
@@ -97,7 +103,7 @@ export default function Overview({ goTo }: OverviewProps) {
             key={s.l}
             className="bg-slate-50/80 border border-slate-100 rounded-2xl p-5 text-center"
           >
-            <div className="font-display text-3xl font-black text-[#9a1866]">{s.n}</div>
+            <div className="font-display text-3xl font-black text-[#b41f6e]">{s.n}</div>
             <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 mt-1">
               {s.l}
             </div>
@@ -126,12 +132,12 @@ export default function Overview({ goTo }: OverviewProps) {
         ].map((c) => {
           const tones: Record<string, string> = {
             rose: "border-rose-200 bg-rose-50/60",
-            violet: "border-[#9a1866]/20 bg-[#9a1866]/5",
+            violet: "border-[#b41f6e]/20 bg-[#b41f6e]/5",
             emerald: "border-emerald-200 bg-emerald-50/60",
           };
           const dot: Record<string, string> = {
             rose: "bg-rose-500",
-            violet: "bg-[#9a1866]",
+            violet: "bg-[#b41f6e]",
             emerald: "bg-emerald-500",
           };
           return (
@@ -156,7 +162,7 @@ export default function Overview({ goTo }: OverviewProps) {
             className="bg-white border border-slate-200/60 rounded-2xl p-6 sm:p-7 shadow-sm"
           >
             <h3 className="font-display text-xl font-extrabold text-[#222222] tracking-tight mb-4 flex items-center gap-2">
-              <span className="h-5 w-1 rounded-full bg-[#9a1866] inline-block" />
+              <span className="h-5 w-1 rounded-full bg-[#b41f6e] inline-block" />
               {sec.heading}
             </h3>
             <div className="space-y-3">
@@ -197,7 +203,7 @@ export default function Overview({ goTo }: OverviewProps) {
       {/* About */}
       {about && (
         <section className="rounded-2xl bg-[#222222] text-slate-200 p-6 sm:p-7">
-          <h3 className="font-display text-base font-bold uppercase tracking-wide text-[#c77fae] mb-3 flex items-center gap-2">
+          <h3 className="font-display text-base font-bold uppercase tracking-wide text-[#d98cc0] mb-3 flex items-center gap-2">
             <ShieldQuestion className="h-5 w-5" />
             About this resource
           </h3>
@@ -213,7 +219,7 @@ export default function Overview({ goTo }: OverviewProps) {
 
       {/* Priority lens legend */}
       <section className="bg-slate-50/80 border border-slate-100 rounded-2xl p-6">
-        <h3 className="font-display text-sm font-bold uppercase tracking-wider text-[#9a1866] mb-4">
+        <h3 className="font-display text-sm font-bold uppercase tracking-wider text-[#b41f6e] mb-4">
           The five priority lenses
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -222,7 +228,7 @@ export default function Overview({ goTo }: OverviewProps) {
               key={k}
               className="flex items-center gap-2 bg-white border border-slate-100 rounded-lg px-3 py-2 text-sm text-slate-700"
             >
-              <span className="font-mono text-[10px] font-bold text-white bg-[#85346a] rounded px-1.5 py-0.5">
+              <span className="font-mono text-[10px] font-bold text-white bg-[#6e2c6a] rounded px-1.5 py-0.5">
                 H / M
               </span>
               {PRIORITY_LABELS[k]}
@@ -234,6 +240,49 @@ export default function Overview({ goTo }: OverviewProps) {
           are flagged. <strong>H</strong> means high priority; <strong>M</strong> means
           medium priority.
         </p>
+      </section>
+
+      {/* Theme Index (third spreadsheet tab) */}
+      <section className="bg-white border border-slate-200/60 rounded-2xl p-6 sm:p-7 shadow-sm">
+        <h3 className="font-display text-xl font-extrabold text-[#222222] tracking-tight mb-1.5 flex items-center gap-2">
+          <ListTree className="h-5 w-5 text-[#b41f6e]" />
+          {THEME_INDEX_TITLE}
+        </h3>
+        <p className="text-sm text-slate-600 mb-5 max-w-3xl">{THEME_INDEX_INTRO}</p>
+        <div className="space-y-5">
+          {THEME_ORDER.map((theme) => {
+            const rows = THEME_INDEX.filter((e) => e.theme === theme);
+            if (!rows.length) return null;
+            return (
+              <div key={theme}>
+                <h4 className="font-display text-xs font-bold uppercase tracking-wider text-[#6e2c6a] mb-2">
+                  {theme}
+                </h4>
+                <div className="border border-slate-100 rounded-xl overflow-hidden divide-y divide-slate-100">
+                  {rows.map((e) => (
+                    <button
+                      key={e.id}
+                      onClick={() => openClause(e.id)}
+                      className="group w-full text-left flex items-center gap-3 px-3 py-2.5 hover:bg-[#b41f6e]/[0.04] transition-colors"
+                      title={`Jump to ${e.id} in the Clause Bank`}
+                    >
+                      <span className="font-mono text-[11px] font-bold text-[#b41f6e] bg-[#b41f6e]/10 rounded px-1.5 py-0.5 w-16 text-center flex-shrink-0">
+                        {e.id}
+                      </span>
+                      <span className="text-sm text-slate-700 flex-grow group-hover:text-[#b41f6e] transition-colors">
+                        {e.topic}
+                      </span>
+                      <span className="hidden sm:block font-mono text-[10px] uppercase tracking-wider text-slate-400">
+                        {e.section}
+                      </span>
+                      <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-[#b41f6e] transition-colors flex-shrink-0" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </section>
     </div>
   );

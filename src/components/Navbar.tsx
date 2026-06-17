@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Library, Menu, X, BookOpen, Layers, FileText } from "lucide-react";
+import { Menu, X, BookOpen, Layers, FileText } from "lucide-react";
+import Logo from "./Logo";
 
 export type TabId = "overview" | "clauses" | "companion";
 
@@ -25,27 +26,21 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b-2 border-slate-100 shadow-sm">
-      {/* Top thin accent brand line */}
-      <div className="h-1 bg-gradient-to-r from-[#9a1866] via-[#85346a] to-[#9a1866]" />
+      {/* Top accent brand line — Library Futures gradient */}
+      <div className="h-1.5 bg-gradient-to-r from-[#c81f76] to-[#5d2a68]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo / Title */}
+          {/* Brand: Library Futures logo + resource title */}
           <div
-            className="flex items-center space-x-3.5 cursor-pointer select-none"
+            className="flex items-center gap-3.5 cursor-pointer select-none"
             onClick={() => handleTabClick("overview")}
           >
-            <div className="bg-[#9a1866]/5 p-2.5 rounded-xl border border-[#9a1866]/10 flex items-center justify-center transition-transform duration-300 hover:scale-105">
-              <Library className="h-6 w-6 text-[#9a1866]" />
-            </div>
-            <div className="leading-none">
-              <h1 className="font-display text-base sm:text-lg md:text-xl font-black text-[#222222] tracking-tight leading-none">
-                Digital Licensing Clause Bank
-              </h1>
-              <p className="hidden sm:block font-mono text-[10px] uppercase tracking-widest text-slate-400 mt-1">
-                For Libraries · Library Futures
-              </p>
-            </div>
+            <Logo markClassName="h-9 w-9" className="transition-transform duration-300 hover:scale-[1.03]" />
+            <span className="hidden lg:block h-9 w-px bg-slate-200" />
+            <h1 className="hidden lg:block font-display text-sm xl:text-base font-bold text-slate-500 tracking-tight leading-tight max-w-[12rem]">
+              Digital Content Licensing Clause Bank
+            </h1>
           </div>
 
           {/* Desktop Navigation */}
@@ -59,7 +54,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
                   onClick={() => handleTabClick(item.id)}
                   className={`flex items-center space-x-2 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
                     isActive
-                      ? "bg-[#9a1866] text-white shadow-md shadow-[#9a1866]/20"
+                      ? "bg-[#b41f6e] text-white shadow-md shadow-[#b41f6e]/20"
                       : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
@@ -96,7 +91,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
                   onClick={() => handleTabClick(item.id)}
                   className={`flex items-center space-x-3 w-full px-4 py-3 rounded-lg text-base font-semibold transition-all ${
                     isActive
-                      ? "bg-[#9a1866] text-white"
+                      ? "bg-[#b41f6e] text-white"
                       : "text-slate-700 hover:bg-slate-50 hover:text-slate-950"
                   }`}
                 >

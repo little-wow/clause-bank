@@ -126,6 +126,10 @@ for line in readme_lines[2:]:
 
 # --- Theme Index sheet ---
 ti_ws = wb["Theme Index"]
+ti_all_lines = [clean(r[0]) for r in ti_ws.iter_rows(min_col=1, max_col=1, values_only=True)]
+ti_all_lines = [l for l in ti_all_lines if l]
+theme_index_title = ti_all_lines[0] if ti_all_lines else "Theme Index"
+theme_index_intro = ti_all_lines[1] if len(ti_all_lines) > 1 else ""
 theme_index = []
 ti_current = None
 for row in ti_ws.iter_rows(min_row=4, values_only=True):
@@ -317,6 +321,8 @@ with open(OUT, "w", encoding="utf-8") as f:
     f.write("export const README_TITLE = " + json.dumps(readme_title, ensure_ascii=False) + ";\n")
     f.write("export const README_SUBTITLE = " + json.dumps(readme_subtitle, ensure_ascii=False) + ";\n")
     f.write("export const README_SECTIONS: ReadmeSection[] = " + ts_dump(readme_sections) + ";\n\n")
+    f.write("export const THEME_INDEX_TITLE = " + json.dumps(theme_index_title, ensure_ascii=False) + ";\n")
+    f.write("export const THEME_INDEX_INTRO = " + json.dumps(theme_index_intro, ensure_ascii=False) + ";\n")
     f.write("export const THEME_INDEX: ThemeIndexEntry[] = " + ts_dump(theme_index) + ";\n\n")
     f.write("export const COMPANION_TITLE = " + json.dumps(companion_title, ensure_ascii=False) + ";\n")
     f.write("export const COMPANION_SUBTITLE = " + json.dumps(companion_subtitle, ensure_ascii=False) + ";\n")
