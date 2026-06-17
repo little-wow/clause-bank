@@ -6,4 +6,5 @@ dist-ssr
 .env.local
 .DS_Store
 .vite
+.wrangler
 *.log
