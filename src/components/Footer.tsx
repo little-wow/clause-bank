@@ -2,7 +2,7 @@ import Logo from "./Logo";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#222222] text-slate-200 border-t-4 border-[#b41f6e] py-12">
+    <footer className="bg-[#222222] text-slate-200 border-t-4 border-[#a80977] py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-8 border-b border-slate-700/50 text-sm">
           {/* Column 1: About */}
@@ -15,7 +15,7 @@ export default function Footer() {
                 href="https://libraryfutures.net"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:text-[#b41f6e] transition-colors"
+                className="underline hover:text-[#a80977] transition-colors"
               >
                 Library Futures
               </a>{" "}
@@ -24,7 +24,7 @@ export default function Footer() {
                 href="https://nyuengelberg.org"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:text-[#b41f6e] transition-colors"
+                className="underline hover:text-[#a80977] transition-colors"
               >
                 The Engelberg Center on Innovation Law &amp; Policy
               </a>{" "}
@@ -34,7 +34,7 @@ export default function Footer() {
 
           {/* Column 2: Not legal advice */}
           <div className="lg:col-span-4 space-y-3">
-            <h4 className="font-display text-white font-bold uppercase tracking-wider text-[#6e2c6a] text-sm">
+            <h4 className="font-display font-bold uppercase tracking-wider text-[#d27ab0] text-sm">
               Not Legal Advice
             </h4>
             <p className="font-sans leading-relaxed text-xs text-slate-400">

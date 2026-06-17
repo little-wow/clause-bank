@@ -40,7 +40,7 @@ export default function CompanionGuide() {
     <div className="fade-in">
       {/* Header */}
       <div className="border-b border-slate-100 pb-6 mb-8">
-        <p className="text-xs text-[#6e2c6a] font-semibold uppercase font-mono tracking-wider mb-2">
+        <p className="text-xs text-[#6f0c56] font-semibold uppercase font-mono tracking-wider mb-2">
           {COMPANION_SUBTITLE} · {COMPANION_UPDATED}
         </p>
         <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-black text-[#222222] tracking-tight">
@@ -52,7 +52,7 @@ export default function CompanionGuide() {
         {/* TOC */}
         <aside className="lg:col-span-3 lg:sticky lg:top-24">
           <div className="bg-slate-50/80 border border-slate-100 rounded-xl p-4">
-            <h3 className="flex items-center gap-1.5 font-display text-[11px] font-bold uppercase tracking-wider text-[#b41f6e] border-b border-slate-100 pb-2 mb-2">
+            <h3 className="flex items-center gap-1.5 font-display text-[11px] font-bold uppercase tracking-wider text-[#a80977] border-b border-slate-100 pb-2 mb-2">
               <List className="h-3.5 w-3.5" /> Contents
             </h3>
             <nav className="space-y-0.5">
@@ -62,8 +62,8 @@ export default function CompanionGuide() {
                   onClick={() => onJump(c.id)}
                   className={`block w-full text-left text-[13px] leading-snug rounded-md px-2.5 py-1.5 transition-colors ${
                     active === c.id
-                      ? "bg-[#b41f6e]/10 text-[#b41f6e] font-semibold"
-                      : "text-slate-600 hover:bg-white hover:text-[#b41f6e]"
+                      ? "bg-[#a80977]/10 text-[#a80977] font-semibold"
+                      : "text-slate-600 hover:bg-white hover:text-[#a80977]"
                   }`}
                 >
                   {c.heading}
@@ -80,7 +80,7 @@ export default function CompanionGuide() {
               return (
                 <section key={i} id={slug(sec.heading)} className="pt-8 first:pt-0">
                   <h3 className="font-display text-2xl font-black text-[#222222] tracking-tight flex items-center gap-3 mb-4">
-                    <span className="h-6 w-1.5 rounded-full bg-[#b41f6e] inline-block" />
+                    <span className="h-6 w-1.5 rounded-full bg-[#a80977] inline-block" />
                     {sec.heading}
                   </h3>
                   <CompanionBody body={sec.body} />
@@ -89,7 +89,7 @@ export default function CompanionGuide() {
             }
             return (
               <section key={i} className="pt-5">
-                <h4 className="font-display text-lg font-bold text-[#6e2c6a] tracking-tight mb-3">
+                <h4 className="font-display text-lg font-bold text-[#6f0c56] tracking-tight mb-3">
                   {sec.heading}
                 </h4>
                 <CompanionBody body={sec.body} />

@@ -33,7 +33,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f6f6f6] flex flex-col justify-between selection:bg-[#b41f6e]/10 selection:text-[#b41f6e]">
+    <div className="min-h-screen bg-[#f6f6f6] flex flex-col justify-between selection:bg-[#a80977]/10 selection:text-[#a80977]">
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <main className="flex-grow w-full">

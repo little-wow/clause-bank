@@ -30,12 +30,12 @@ const SHORT_LABEL = /^([A-Z][A-Za-z'’\- ?]{2,45}):\s+(.+)$/;
  */
 const LABEL_COLORS: Record<string, string> = {
   "Common Pro-Vendor Language": "text-rose-700",
-  "Pro-Library Version": "text-[#b41f6e]",
+  "Pro-Library Version": "text-[#a80977]",
   "Reasonable Fallback": "text-emerald-700",
-  "Why?": "text-[#b41f6e]",
+  "Why?": "text-[#a80977]",
   "Watch For": "text-amber-700",
-  "Clause ID": "text-[#b41f6e]",
-  "Companion Doc Ref": "text-[#6e2c6a]",
+  "Clause ID": "text-[#a80977]",
+  "Companion Doc Ref": "text-[#6f0c56]",
 };
 
 function slug(s: string) {
@@ -58,7 +58,7 @@ function DefLine({
 }) {
   const m = text.match(SHORT_LABEL);
   if (m) {
-    const color = colorMap?.[m[1].trim()] ?? "text-[#b41f6e]";
+    const color = colorMap?.[m[1].trim()] ?? "text-[#a80977]";
     return (
       <p className="text-sm sm:text-[0.95rem] leading-relaxed text-slate-600">
         <span className={`font-semibold ${color}`}>{m[1]}:</span> {m[2]}
@@ -108,7 +108,7 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
         <div className="flex flex-wrap gap-3 pt-1">
           <button
             onClick={() => goTo("clauses")}
-            className="inline-flex items-center gap-2 bg-[#b41f6e] text-white font-semibold text-sm px-5 py-3 rounded-xl shadow-md shadow-[#b41f6e]/20 hover:bg-[#6e2c6a] transition-colors"
+            className="inline-flex items-center gap-2 bg-[#a80977] text-white font-semibold text-sm px-5 py-3 rounded-xl shadow-md shadow-[#a80977]/20 hover:bg-[#6f0c56] transition-colors"
           >
             <Layers className="h-4 w-4" />
             Open the Clause Bank
@@ -116,7 +116,7 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
           </button>
           <button
             onClick={() => goTo("companion")}
-            className="inline-flex items-center gap-2 bg-white text-[#b41f6e] font-semibold text-sm px-5 py-3 rounded-xl border border-[#b41f6e]/20 hover:bg-[#b41f6e]/5 transition-colors"
+            className="inline-flex items-center gap-2 bg-white text-[#a80977] font-semibold text-sm px-5 py-3 rounded-xl border border-[#a80977]/20 hover:bg-[#a80977]/5 transition-colors"
           >
             <FileText className="h-4 w-4" />
             Read the Companion Guide
@@ -126,7 +126,7 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
 
       {/* On this page — above-the-fold navigation */}
       <section className="bg-slate-50/80 border border-slate-100 rounded-2xl p-5 sm:p-6">
-        <h2 className="font-display text-xs font-bold uppercase tracking-wider text-[#6e2c6a] mb-3">
+        <h2 className="font-display text-xs font-bold uppercase tracking-wider text-[#6f0c56] mb-3">
           On this page
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
@@ -134,12 +134,12 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
             <button
               key={s.id}
               onClick={() => scrollToId(s.id)}
-              className="group flex items-center justify-between gap-2 text-left bg-white border border-slate-100 rounded-lg px-3 py-2.5 hover:border-[#b41f6e]/40 transition-colors"
+              className="group flex items-center justify-between gap-2 text-left bg-white border border-slate-100 rounded-lg px-3 py-2.5 hover:border-[#a80977]/40 transition-colors"
             >
-              <span className="text-sm font-medium text-slate-700 group-hover:text-[#b41f6e] transition-colors">
+              <span className="text-sm font-medium text-slate-700 group-hover:text-[#a80977] transition-colors">
                 {s.label}
               </span>
-              <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-[#b41f6e] transition-colors flex-shrink-0" />
+              <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-[#a80977] transition-colors flex-shrink-0" />
             </button>
           ))}
         </div>
@@ -154,7 +154,7 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
             className="bg-white border border-slate-200/60 rounded-2xl p-6 sm:p-7 shadow-sm"
           >
             <h2 className="font-display text-xl font-extrabold text-[#222222] tracking-tight mb-4 flex items-center gap-2">
-              <span className="h-5 w-1 rounded-full bg-[#b41f6e] inline-block" />
+              <span className="h-5 w-1 rounded-full bg-[#a80977] inline-block" />
               {sec.heading}
             </h2>
             <div className="space-y-3">
@@ -206,7 +206,7 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
         className="bg-white border border-slate-200/60 rounded-2xl p-6 sm:p-7 shadow-sm"
       >
         <h2 className="font-display text-xl font-extrabold text-[#222222] tracking-tight mb-1.5 flex items-center gap-2">
-          <ListTree className="h-5 w-5 text-[#b41f6e]" />
+          <ListTree className="h-5 w-5 text-[#a80977]" />
           {THEME_INDEX_TITLE}
         </h2>
         <p className="text-sm text-slate-600 mb-5 max-w-3xl">{THEME_INDEX_INTRO}</p>
@@ -216,7 +216,7 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
             if (!rows.length) return null;
             return (
               <div key={theme}>
-                <h3 className="font-display text-xs font-bold uppercase tracking-wider text-[#6e2c6a] mb-2">
+                <h3 className="font-display text-xs font-bold uppercase tracking-wider text-[#6f0c56] mb-2">
                   {theme}
                 </h3>
                 <div className="border border-slate-100 rounded-xl overflow-hidden divide-y divide-slate-100">
@@ -224,19 +224,19 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
                     <button
                       key={e.id}
                       onClick={() => openClause(e.id)}
-                      className="group w-full text-left flex items-center gap-3 px-3 py-2.5 hover:bg-[#b41f6e]/[0.04] transition-colors"
+                      className="group w-full text-left flex items-center gap-3 px-3 py-2.5 hover:bg-[#a80977]/[0.04] transition-colors"
                       title={`Jump to ${e.id} in the Clause Bank`}
                     >
-                      <span className="text-[11px] font-bold text-[#b41f6e] bg-[#b41f6e]/10 rounded px-1.5 py-0.5 w-16 text-center flex-shrink-0">
+                      <span className="text-[11px] font-bold text-[#a80977] bg-[#a80977]/10 rounded px-1.5 py-0.5 w-16 text-center flex-shrink-0">
                         {e.id}
                       </span>
-                      <span className="text-sm text-slate-700 flex-grow group-hover:text-[#b41f6e] transition-colors">
+                      <span className="text-sm text-slate-700 flex-grow group-hover:text-[#a80977] transition-colors">
                         {e.topic}
                       </span>
                       <span className="hidden sm:block text-[10px] uppercase tracking-wider text-slate-400">
                         {e.section}
                       </span>
-                      <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-[#b41f6e] transition-colors flex-shrink-0" />
+                      <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-[#a80977] transition-colors flex-shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -249,7 +249,7 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
       {/* About this resource — moved to the bottom of the page */}
       {about && (
         <section className="rounded-2xl bg-[#222222] text-slate-200 p-6 sm:p-7">
-          <h2 className="font-display text-base font-bold uppercase tracking-wide text-[#d98cc0] mb-3">
+          <h2 className="font-display text-base font-bold uppercase tracking-wide text-[#d27ab0] mb-3">
             About this resource
           </h2>
           <div className="space-y-2.5">

@@ -27,7 +27,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   return (
     <header className="sticky top-0 z-50 bg-white border-b-2 border-slate-100 shadow-sm">
       {/* Top accent brand line — Library Futures gradient */}
-      <div className="h-1.5 bg-gradient-to-r from-[#c81f76] to-[#5d2a68]" />
+      <div className="h-1.5 bg-gradient-to-r from-[#a80977] to-[#6f0c56]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
@@ -54,7 +54,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
                   onClick={() => handleTabClick(item.id)}
                   className={`flex items-center space-x-2 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
                     isActive
-                      ? "bg-[#b41f6e] text-white shadow-md shadow-[#b41f6e]/20"
+                      ? "bg-[#a80977] text-white shadow-md shadow-[#a80977]/20"
                       : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
@@ -91,7 +91,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
                   onClick={() => handleTabClick(item.id)}
                   className={`flex items-center space-x-3 w-full px-4 py-3 rounded-lg text-base font-semibold transition-all ${
                     isActive
-                      ? "bg-[#b41f6e] text-white"
+                      ? "bg-[#a80977] text-white"
                       : "text-slate-700 hover:bg-slate-50 hover:text-slate-950"
                   }`}
                 >

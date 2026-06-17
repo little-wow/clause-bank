@@ -10,10 +10,8 @@ interface LogoProps {
 /**
  * Library Futures logo.
  *
- * Displays the official artwork from /public/library-futures-logo.png when it
- * exists. Until that file is added, it falls back to the LIBRARY FUTURES
- * wordmark set in the brand color. To use the official logo, export the EPS to
- * a transparent PNG (or SVG) and save it as public/library-futures-logo.png.
+ * Displays the official artwork from /public/library-futures-logo.svg. If that
+ * file is missing it falls back to the LIBRARY FUTURES wordmark in brand color.
  */
 export default function Logo({ variant = "color", heightClass = "h-9" }: LogoProps) {
   const [imgOk, setImgOk] = useState(true);
@@ -21,7 +19,7 @@ export default function Logo({ variant = "color", heightClass = "h-9" }: LogoPro
   if (imgOk) {
     return (
       <img
-        src="/library-futures-logo.png"
+        src="/library-futures-logo.svg"
         alt="Library Futures"
         className={`${heightClass} w-auto select-none`}
         onError={() => setImgOk(false)}
@@ -32,7 +30,7 @@ export default function Logo({ variant = "color", heightClass = "h-9" }: LogoPro
   return (
     <span
       className={`font-black tracking-tight leading-none text-lg sm:text-xl select-none ${
-        variant === "light" ? "text-white" : "text-[#b41f6e]"
+        variant === "light" ? "text-white" : "text-[#a80977]"
       }`}
     >
       LIBRARY&nbsp;FUTURES
