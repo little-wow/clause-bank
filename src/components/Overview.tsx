@@ -24,20 +24,6 @@ interface OverviewProps {
 
 const SHORT_LABEL = /^([A-Z][A-Za-z'’\- ?]{2,45}):\s+(.+)$/;
 
-/**
- * Label colors matched to how each concept is shown elsewhere on the site:
- * vendor = rose, library = brand magenta, fallback = emerald, watch-for = amber.
- */
-const LABEL_COLORS: Record<string, string> = {
-  "Common Pro-Vendor Language": "text-rose-700",
-  "Pro-Library Version": "text-[#a80977]",
-  "Reasonable Fallback": "text-emerald-700",
-  "Why?": "text-[#a80977]",
-  "Watch For": "text-amber-700",
-  "Clause ID": "text-[#a80977]",
-  "Companion Doc Ref": "text-[#6f0c56]",
-};
-
 function slug(s: string) {
   return (
     "sec-" +
@@ -48,25 +34,18 @@ function slug(s: string) {
   );
 }
 
-/** Render a paragraph, coloring a leading "Label: ..." definition. */
-function DefLine({
-  text,
-  colorMap,
-}: {
-  text: string;
-  colorMap?: Record<string, string>;
-}) {
+/** Render a paragraph: purple for a leading "Label:", black for the rest. */
+function DefLine({ text }: { text: string }) {
   const m = text.match(SHORT_LABEL);
   if (m) {
-    const color = colorMap?.[m[1].trim()] ?? "text-[#a80977]";
     return (
-      <p className="text-sm sm:text-[0.95rem] leading-relaxed text-slate-600">
-        <span className={`font-semibold ${color}`}>{m[1]}:</span> {m[2]}
+      <p className="text-sm sm:text-[0.95rem] leading-relaxed text-[#222222]">
+        <span className="font-semibold text-[#6f0c56]">{m[1]}:</span> {m[2]}
       </p>
     );
   }
   return (
-    <p className="text-sm sm:text-[0.95rem] leading-relaxed text-slate-600">{text}</p>
+    <p className="text-sm sm:text-[0.95rem] leading-relaxed text-[#222222]">{text}</p>
   );
 }
 
@@ -159,15 +138,7 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
             </h2>
             <div className="space-y-3">
               {sec.body.map((p, i) => (
-                <DefLine
-                  key={i}
-                  text={p}
-                  colorMap={
-                    sec.heading === "Notes on Organization: Rows and Columns"
-                      ? LABEL_COLORS
-                      : undefined
-                  }
-                />
+                <DefLine key={i} text={p} />
               ))}
             </div>
           </div>
