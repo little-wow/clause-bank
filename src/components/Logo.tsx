@@ -21,7 +21,7 @@ export default function Logo({ variant = "color", heightClass = "h-9" }: LogoPro
   if (imgOk) {
     return (
       <img
-        src="/library-futures-logo.png"
+        src="https://github.com/NYUEngelberg/copyright-tools/blob/main/src/LIbraryFutures_CMYK.svg"
         alt="Library Futures"
         className={`${heightClass} w-auto select-none`}
         onError={() => setImgOk(false)}
