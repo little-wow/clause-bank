@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
+    "postbuild": "node -e \"const fs=require('fs');['dist/_redirects','dist/_headers'].forEach(f=>{try{fs.rmSync(f,{force:true})}catch{}})\"",
     "preview": "vite preview --port=3000 --host=0.0.0.0",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
