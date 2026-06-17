@@ -1,12 +1,8 @@
-import type { JSX } from "react";
 import {
   README_TITLE,
   README_SUBTITLE,
   README_SECTIONS,
   THEME_ORDER,
-  CLAUSES,
-  PRIORITY_LABELS,
-  PRIORITY_KEYS,
   THEME_INDEX,
   THEME_INDEX_TITLE,
   THEME_INDEX_INTRO,
@@ -15,9 +11,8 @@ import type { TabId } from "./Navbar";
 import {
   Layers,
   FileText,
-  AlertTriangle,
   ArrowRight,
-  ShieldQuestion,
+  AlertTriangle,
   ListTree,
   ChevronRight,
 } from "lucide-react";
@@ -27,15 +22,46 @@ interface OverviewProps {
   openClause: (id: string) => void;
 }
 
-const SHORT_LABEL = /^([A-Z][A-Za-z' ?]{2,45}):\s+(.+)$/;
+const SHORT_LABEL = /^([A-Z][A-Za-z'’\- ?]{2,45}):\s+(.+)$/;
 
-/** Render a paragraph, bolding a leading "Label: ..." definition when present. */
-function Paragraph({ text }: { text: string }): JSX.Element {
+/**
+ * Label colors matched to how each concept is shown elsewhere on the site:
+ * vendor = rose, library = brand magenta, fallback = emerald, watch-for = amber.
+ */
+const LABEL_COLORS: Record<string, string> = {
+  "Common Pro-Vendor Language": "text-rose-700",
+  "Pro-Library Version": "text-[#b41f6e]",
+  "Reasonable Fallback": "text-emerald-700",
+  "Why?": "text-[#b41f6e]",
+  "Watch For": "text-amber-700",
+  "Clause ID": "text-[#b41f6e]",
+  "Companion Doc Ref": "text-[#6e2c6a]",
+};
+
+function slug(s: string) {
+  return (
+    "sec-" +
+    s
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+  );
+}
+
+/** Render a paragraph, coloring a leading "Label: ..." definition. */
+function DefLine({
+  text,
+  colorMap,
+}: {
+  text: string;
+  colorMap?: Record<string, string>;
+}) {
   const m = text.match(SHORT_LABEL);
   if (m) {
+    const color = colorMap?.[m[1].trim()] ?? "text-[#b41f6e]";
     return (
       <p className="text-sm sm:text-[0.95rem] leading-relaxed text-slate-600">
-        <span className="font-semibold text-[#b41f6e]">{m[1]}:</span> {m[2]}
+        <span className={`font-semibold ${color}`}>{m[1]}:</span> {m[2]}
       </p>
     );
   }
@@ -52,27 +78,34 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
     (s) => !["Intro", "IMPORTANT!", "About"].includes(s.heading)
   );
 
+  const scrollToId = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const pageSections = [
+    ...body.map((s) => ({ label: s.heading, id: slug(s.heading) })),
+    { label: THEME_INDEX_TITLE, id: "theme-index" },
+  ];
+
   return (
-    <div className="space-y-10 fade-in">
+    <div className="space-y-8 fade-in">
       {/* Hero */}
-      <section className="space-y-5 border-b border-slate-100 pb-8">
-        <span className="inline-block text-[11px] font-mono uppercase tracking-widest text-[#6e2c6a] bg-[#6e2c6a]/10 border border-[#6e2c6a]/20 rounded-full px-3 py-1">
-          Library Futures · Negotiation Reference
-        </span>
-        <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-[#222222] tracking-tight leading-[1.05]">
+      <section className="space-y-4">
+        <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-[#222222] tracking-tight leading-[1.05]">
           {README_TITLE}
-        </h2>
-        <p className="font-serif text-lg sm:text-xl text-slate-700 max-w-3xl leading-relaxed">
+        </h1>
+        <p className="text-lg sm:text-xl text-slate-600 max-w-3xl leading-relaxed">
           {README_SUBTITLE}
         </p>
         {intro && (
-          <div className="space-y-3 max-w-3xl pt-1">
+          <div className="space-y-3 max-w-3xl">
             {intro.body.map((p, i) => (
-              <Paragraph key={i} text={p} />
+              <DefLine key={i} text={p} />
             ))}
           </div>
         )}
-        <div className="flex flex-wrap gap-3 pt-2">
+        <div className="flex flex-wrap gap-3 pt-1">
           <button
             onClick={() => goTo("clauses")}
             className="inline-flex items-center gap-2 bg-[#b41f6e] text-white font-semibold text-sm px-5 py-3 rounded-xl shadow-md shadow-[#b41f6e]/20 hover:bg-[#6e2c6a] transition-colors"
@@ -91,67 +124,25 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
         </div>
       </section>
 
-      {/* Stat strip */}
-      <section className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {[
-          { n: String(CLAUSES.length), l: "Negotiable clauses" },
-          { n: String(THEME_ORDER.length), l: "Thematic groups" },
-          { n: "3", l: "Versions per clause" },
-          { n: "5", l: "Priority lenses" },
-        ].map((s) => (
-          <div
-            key={s.l}
-            className="bg-slate-50/80 border border-slate-100 rounded-2xl p-5 text-center"
-          >
-            <div className="font-display text-3xl font-black text-[#b41f6e]">{s.n}</div>
-            <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 mt-1">
-              {s.l}
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* Three-version legend */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {[
-          {
-            tag: "Common Pro-Vendor Language",
-            tone: "rose",
-            desc: "The version you are likely to find in a vendor template.",
-          },
-          {
-            tag: "Pro-Library Version",
-            tone: "violet",
-            desc: "The version drafted to favor the library — your opening counter.",
-          },
-          {
-            tag: "Reasonable Fallback",
-            tone: "emerald",
-            desc: "Language either side could defend as fair — the likely landing place.",
-          },
-        ].map((c) => {
-          const tones: Record<string, string> = {
-            rose: "border-rose-200 bg-rose-50/60",
-            violet: "border-[#b41f6e]/20 bg-[#b41f6e]/5",
-            emerald: "border-emerald-200 bg-emerald-50/60",
-          };
-          const dot: Record<string, string> = {
-            rose: "bg-rose-500",
-            violet: "bg-[#b41f6e]",
-            emerald: "bg-emerald-500",
-          };
-          return (
-            <div key={c.tag} className={`rounded-2xl border p-5 ${tones[c.tone]}`}>
-              <div className="flex items-center gap-2 mb-2">
-                <span className={`h-2.5 w-2.5 rounded-full ${dot[c.tone]}`} />
-                <h3 className="font-display font-bold text-sm uppercase tracking-wide text-[#222222]">
-                  {c.tag}
-                </h3>
-              </div>
-              <p className="text-xs leading-relaxed text-slate-600">{c.desc}</p>
-            </div>
-          );
-        })}
+      {/* On this page — above-the-fold navigation */}
+      <section className="bg-slate-50/80 border border-slate-100 rounded-2xl p-5 sm:p-6">
+        <h2 className="font-display text-xs font-bold uppercase tracking-wider text-[#6e2c6a] mb-3">
+          On this page
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+          {pageSections.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => scrollToId(s.id)}
+              className="group flex items-center justify-between gap-2 text-left bg-white border border-slate-100 rounded-lg px-3 py-2.5 hover:border-[#b41f6e]/40 transition-colors"
+            >
+              <span className="text-sm font-medium text-slate-700 group-hover:text-[#b41f6e] transition-colors">
+                {s.label}
+              </span>
+              <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-[#b41f6e] transition-colors flex-shrink-0" />
+            </button>
+          ))}
+        </div>
       </section>
 
       {/* Narrative sections */}
@@ -159,15 +150,24 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
         {body.map((sec) => (
           <div
             key={sec.heading}
+            id={slug(sec.heading)}
             className="bg-white border border-slate-200/60 rounded-2xl p-6 sm:p-7 shadow-sm"
           >
-            <h3 className="font-display text-xl font-extrabold text-[#222222] tracking-tight mb-4 flex items-center gap-2">
+            <h2 className="font-display text-xl font-extrabold text-[#222222] tracking-tight mb-4 flex items-center gap-2">
               <span className="h-5 w-1 rounded-full bg-[#b41f6e] inline-block" />
               {sec.heading}
-            </h3>
+            </h2>
             <div className="space-y-3">
               {sec.body.map((p, i) => (
-                <Paragraph key={i} text={p} />
+                <DefLine
+                  key={i}
+                  text={p}
+                  colorMap={
+                    sec.heading === "Notes on Organization: Rows and Columns"
+                      ? LABEL_COLORS
+                      : undefined
+                  }
+                />
               ))}
             </div>
           </div>
@@ -177,10 +177,10 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
       {/* IMPORTANT callout */}
       {important && (
         <section className="rounded-2xl border-2 border-amber-200 bg-amber-50/70 p-6 sm:p-7">
-          <h3 className="font-display text-lg font-black uppercase tracking-wide text-amber-800 mb-4 flex items-center gap-2">
+          <h2 className="font-display text-lg font-black uppercase tracking-wide text-amber-800 mb-4 flex items-center gap-2">
             <AlertTriangle className="h-5 w-5" />
             Important
-          </h3>
+          </h2>
           <div className="space-y-3">
             {important.body.map((p, i) => {
               const m = p.match(SHORT_LABEL);
@@ -200,54 +200,15 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
         </section>
       )}
 
-      {/* About */}
-      {about && (
-        <section className="rounded-2xl bg-[#222222] text-slate-200 p-6 sm:p-7">
-          <h3 className="font-display text-base font-bold uppercase tracking-wide text-[#d98cc0] mb-3 flex items-center gap-2">
-            <ShieldQuestion className="h-5 w-5" />
-            About this resource
-          </h3>
-          <div className="space-y-2.5">
-            {about.body.map((p, i) => (
-              <p key={i} className="text-sm leading-relaxed text-slate-300">
-                {p}
-              </p>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Priority lens legend */}
-      <section className="bg-slate-50/80 border border-slate-100 rounded-2xl p-6">
-        <h3 className="font-display text-sm font-bold uppercase tracking-wider text-[#b41f6e] mb-4">
-          The five priority lenses
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {PRIORITY_KEYS.map((k) => (
-            <div
-              key={k}
-              className="flex items-center gap-2 bg-white border border-slate-100 rounded-lg px-3 py-2 text-sm text-slate-700"
-            >
-              <span className="font-mono text-[10px] font-bold text-white bg-[#6e2c6a] rounded px-1.5 py-0.5">
-                H / M
-              </span>
-              {PRIORITY_LABELS[k]}
-            </div>
-          ))}
-        </div>
-        <p className="text-xs text-slate-500 mt-4">
-          Markers are sparse: only clauses where the need genuinely drives the priority
-          are flagged. <strong>H</strong> means high priority; <strong>M</strong> means
-          medium priority.
-        </p>
-      </section>
-
       {/* Theme Index (third spreadsheet tab) */}
-      <section className="bg-white border border-slate-200/60 rounded-2xl p-6 sm:p-7 shadow-sm">
-        <h3 className="font-display text-xl font-extrabold text-[#222222] tracking-tight mb-1.5 flex items-center gap-2">
+      <section
+        id="theme-index"
+        className="bg-white border border-slate-200/60 rounded-2xl p-6 sm:p-7 shadow-sm"
+      >
+        <h2 className="font-display text-xl font-extrabold text-[#222222] tracking-tight mb-1.5 flex items-center gap-2">
           <ListTree className="h-5 w-5 text-[#b41f6e]" />
           {THEME_INDEX_TITLE}
-        </h3>
+        </h2>
         <p className="text-sm text-slate-600 mb-5 max-w-3xl">{THEME_INDEX_INTRO}</p>
         <div className="space-y-5">
           {THEME_ORDER.map((theme) => {
@@ -255,9 +216,9 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
             if (!rows.length) return null;
             return (
               <div key={theme}>
-                <h4 className="font-display text-xs font-bold uppercase tracking-wider text-[#6e2c6a] mb-2">
+                <h3 className="font-display text-xs font-bold uppercase tracking-wider text-[#6e2c6a] mb-2">
                   {theme}
-                </h4>
+                </h3>
                 <div className="border border-slate-100 rounded-xl overflow-hidden divide-y divide-slate-100">
                   {rows.map((e) => (
                     <button
@@ -266,13 +227,13 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
                       className="group w-full text-left flex items-center gap-3 px-3 py-2.5 hover:bg-[#b41f6e]/[0.04] transition-colors"
                       title={`Jump to ${e.id} in the Clause Bank`}
                     >
-                      <span className="font-mono text-[11px] font-bold text-[#b41f6e] bg-[#b41f6e]/10 rounded px-1.5 py-0.5 w-16 text-center flex-shrink-0">
+                      <span className="text-[11px] font-bold text-[#b41f6e] bg-[#b41f6e]/10 rounded px-1.5 py-0.5 w-16 text-center flex-shrink-0">
                         {e.id}
                       </span>
                       <span className="text-sm text-slate-700 flex-grow group-hover:text-[#b41f6e] transition-colors">
                         {e.topic}
                       </span>
-                      <span className="hidden sm:block font-mono text-[10px] uppercase tracking-wider text-slate-400">
+                      <span className="hidden sm:block text-[10px] uppercase tracking-wider text-slate-400">
                         {e.section}
                       </span>
                       <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-[#b41f6e] transition-colors flex-shrink-0" />
@@ -284,6 +245,22 @@ export default function Overview({ goTo, openClause }: OverviewProps) {
           })}
         </div>
       </section>
+
+      {/* About this resource — moved to the bottom of the page */}
+      {about && (
+        <section className="rounded-2xl bg-[#222222] text-slate-200 p-6 sm:p-7">
+          <h2 className="font-display text-base font-bold uppercase tracking-wide text-[#d98cc0] mb-3">
+            About this resource
+          </h2>
+          <div className="space-y-2.5">
+            {about.body.map((p, i) => (
+              <p key={i} className="text-sm leading-relaxed text-slate-300">
+                {p}
+              </p>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

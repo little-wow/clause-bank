@@ -36,9 +36,9 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
             className="flex items-center gap-3.5 cursor-pointer select-none"
             onClick={() => handleTabClick("overview")}
           >
-            <Logo markClassName="h-9 w-9" className="transition-transform duration-300 hover:scale-[1.03]" />
+            <Logo heightClass="h-9" />
             <span className="hidden lg:block h-9 w-px bg-slate-200" />
-            <h1 className="hidden lg:block font-display text-sm xl:text-base font-bold text-slate-500 tracking-tight leading-tight max-w-[12rem]">
+            <h1 className="hidden lg:block text-sm xl:text-base font-bold text-slate-500 tracking-tight leading-tight max-w-[12rem]">
               Digital Content Licensing Clause Bank
             </h1>
           </div>

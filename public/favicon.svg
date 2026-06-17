@@ -1,12 +1,4 @@
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Library Futures">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#c81f76"/>
-      <stop offset="100%" stop-color="#5d2a68"/>
-    </linearGradient>
-  </defs>
-  <g fill="url(#g)">
-    <path d="M14 10 H49 L86 47 H51 Z"/>
-    <path d="M14 55 H51 L86 90 H51 L14 73 Z"/>
-  </g>
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Library Futures">
+  <rect width="64" height="64" rx="13" fill="#b41f6e"/>
+  <text x="32" y="45" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="32" fill="#ffffff">LF</text>
 </svg>

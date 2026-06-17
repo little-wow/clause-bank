@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-8 border-b border-slate-700/50 text-sm">
           {/* Column 1: About */}
           <div className="lg:col-span-5 space-y-3">
-            <Logo variant="light" markClassName="h-8 w-8" />
+            <Logo variant="light" heightClass="h-8" />
             <p className="font-sans leading-relaxed text-xs text-slate-300">
               A working reference for libraries negotiating licenses to digital
               content, databases, and platforms. Part of a resource set published by{" "}
@@ -59,12 +59,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs font-mono font-medium text-slate-400">
+        <div className="pt-8 text-xs font-medium text-slate-400">
           <span>
             © 2026 Library Futures / The Engelberg Center on Innovation Law &amp; Policy
-          </span>
-          <span className="mt-4 md:mt-0 text-[#6e2c6a] text-[10px] uppercase tracking-widest font-bold">
-            Aligned with libraryfutures.net standards
           </span>
         </div>
       </div>
