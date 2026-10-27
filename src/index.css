@@ -1,23 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
+/* Library Futures look (libraryfutures.net): one system sans family, near-black
+   ink, plum accent, soft blush panels, light gray rules. */
 @theme {
-  --font-serif: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --color-brand-primary: #a80977;
-  --color-brand-secondary: #6f0c56;
-  --color-brand-gray: #f6f6f6;
-  --color-brand-black-body: #222222;
-  --color-brand-white: #ffffff;
-}
-
-:root {
-  --text-primary: #222222;
-  --color-primary: #a80977;
-  --color-secondary: #6f0c56;
-  --bg-parchment: #f6f6f6;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  --color-ink: #1a1a1a;
+  --color-plum: #7d1b6e;
+  --color-plum-dark: #651659;
+  --color-blush: #f3eaf2;
+  --color-blush-line: #c9a8c4;
+  --color-line: #e0e0e0;
+  --color-paper: #fafafa;
 }
 
 html {
@@ -25,38 +19,51 @@ html {
 }
 
 body {
-  background-color: #f6f6f6;
-  color: #222222;
+  background-color: #ffffff;
+  color: var(--color-ink);
   font-family: var(--font-sans);
-  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Brand-accented scrollbars */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #f6f6f6;
-}
-::-webkit-scrollbar-thumb {
-  background: #6f0c56;
-  border: 2px solid #f6f6f6;
-  border-radius: 6px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #a80977;
-}
-
-/* Offset anchored sections for the sticky header */
+/* Anchored headings clear the sticky header */
 [id] {
-  scroll-margin-top: 6rem;
+  scroll-margin-top: 6.5rem;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+:focus-visible {
+  outline: 3px solid var(--color-plum);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
-.fade-in {
-  animation: fadeIn 0.3s ease-out;
+
+/* Long-form reading text */
+.prose-lf p {
+  margin-top: 1.1em;
+  line-height: 1.75;
+}
+.prose-lf p:first-child {
+  margin-top: 0;
+}
+.prose-lf ul {
+  margin-top: 1.1em;
+  padding-left: 1.4em;
+  list-style: disc;
+}
+.prose-lf li {
+  margin-top: 0.5em;
+  line-height: 1.7;
+  padding-left: 0.2em;
+}
+.prose-lf li::marker {
+  color: var(--color-plum);
+}
+.prose-lf a {
+  color: var(--color-plum);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose-lf a:hover {
+  color: var(--color-plum-dark);
+  text-decoration-thickness: 2px;
 }

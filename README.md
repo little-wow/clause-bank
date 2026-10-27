@@ -5,20 +5,24 @@ Libraries** and its **Companion Document**, published by
 [Library Futures](https://libraryfutures.net) and the
 [Engelberg Center on Innovation Law & Policy](https://nyuengelberg.org) at NYU Law.
 
-All clause and companion language is taken **verbatim** from the source documents.
-The site is designed to be readable and easily scannable for library negotiators.
+The book (`scripts/book.pdf`) is the final word on wording and structure; the
+workbook (`scripts/clause_bank.xlsx`) supplies the priority markers, Read Me First,
+and Theme Index. All language is taken **verbatim** from those sources.
 
 ## What's here
 
-- **Overview** — the "Read Me First" guidance: how the bank is organized, how to use
-  it, the five priority lenses, and the important caveats.
-- **Clause Bank** — 36 negotiable clauses across 8 themes. Search and filter by theme
-  or by library priority. Each clause expands to show three versions side by side
-  (Common Pro-Vendor Language · Pro-Library Version · Reasonable Fallback), plus
-  *Why?*, *Watch For*, priority badges, and a pointer into the Companion Guide. Each
-  version can be copied to the clipboard.
-- **Companion Guide** — the full companion document, organized by its eight theme
-  chapters with a sticky table of contents.
+- **Introduction** — the book's Introduction, with links to each part of the site.
+- **Companion** — Negotiating with Vendors and the eight numbered chapters, one page
+  each, with a contents sidebar, linked clause IDs, and previous/next.
+- **Clause Bank** — 36 clauses in book order, grouped by theme and searchable. Each
+  clause page shows the three versions (stacked, or side by side), Why?, Watch For,
+  its priority markers, and a link to its Companion Doc Ref section.
+- **Spreadsheet** — every clause and the five priority columns in one table: filter
+  by theme or priority, sort by a priority column, expand a row for the full clause,
+  show every workbook column, or download the `.xlsx`.
+- **How to Use** — the workbook's Read Me First tab and the Theme Index.
+
+Pages are hash routes (`#/clauses/GS-LG`), so every page has a shareable link.
 
 ## Tech
 
@@ -26,9 +30,8 @@ The site is designed to be readable and easily scannable for library negotiators
 - [Tailwind CSS v4](https://tailwindcss.com) (via `@tailwindcss/vite`)
 - [lucide-react](https://lucide.dev) icons
 
-The visual design follows the
-[Interactive Copyright Tools](https://github.com/little-wow/Interactive-Copyright-Tools)
-brand system (palette, typography, layout).
+The visual design follows [libraryfutures.net](https://libraryfutures.net): one
+system sans-serif family, heavy uppercase headings, plum (`#7d1b6e`) accents.
 
 ## Develop
 
@@ -45,8 +48,16 @@ All content lives in `src/data.ts`, generated **verbatim** from the source files
 `scripts/` so the build is reproducible and the language is never retyped:
 
 ```bash
-npm run gen      # reads scripts/*.xlsx + scripts/*.docx -> src/data.ts
+pip install pdfminer.six openpyxl
+npm run gen                       # scripts/book.pdf + scripts/clause_bank.xlsx -> src/data.ts
+python3 scripts/verify_data.py    # checks every word against the book and workbook
 ```
+
+The generator uses the book's numbered chapters (PDF pages 17–32) and skips the
+older duplicate of those chapters on pages 55–69. Companion Doc Refs are pointed at
+the book's actual sections (the book's last ten refs say 7.1–9.4, which don't exist).
+Watch For uses the book's bullets; the last ten clauses, which the book prints as a
+paragraph, get one bullet per item.
 
 ## Deploy (Cloudflare)
 

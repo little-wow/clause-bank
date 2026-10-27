@@ -1,67 +1,61 @@
 import Logo from "./Logo";
+import { NAV } from "./Header";
+import { to } from "../router";
+import { SPREADSHEET_FILE } from "./ui";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#222222] text-slate-200 border-t-4 border-[#a80977] py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-8 border-b border-slate-700/50 text-sm">
-          {/* Column 1: About */}
-          <div className="lg:col-span-5 space-y-3">
-            <Logo variant="light" heightClass="h-8" />
-            <p className="font-sans leading-relaxed text-xs text-slate-300">
-              A working reference for libraries negotiating licenses to digital
-              content, databases, and platforms. Part of a resource set published by{" "}
-              <a
-                href="https://libraryfutures.net"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-[#a80977] transition-colors"
-              >
+    <footer className="mt-24 bg-gradient-to-b from-paper to-white border-t border-[#ddd]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid gap-10 md:grid-cols-12">
+          <div className="md:col-span-5 space-y-4">
+            <Logo heightClass="h-12" />
+            <p className="text-sm leading-relaxed text-ink/80 max-w-md">
+              A working reference for libraries negotiating licenses to digital content, databases, and
+              platforms, published by{" "}
+              <a className="underline underline-offset-2 hover:text-plum" href="https://libraryfutures.net" target="_blank" rel="noopener noreferrer">
                 Library Futures
               </a>{" "}
               and{" "}
-              <a
-                href="https://nyuengelberg.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-[#a80977] transition-colors"
-              >
+              <a className="underline underline-offset-2 hover:text-plum" href="https://www.nyuengelberg.org" target="_blank" rel="noopener noreferrer">
                 The Engelberg Center on Innovation Law &amp; Policy
-              </a>{" "}
-              at NYU Law.
+              </a>
+              .
             </p>
           </div>
-
-          {/* Column 2: Not legal advice */}
-          <div className="lg:col-span-4 space-y-3">
-            <h4 className="font-display font-bold uppercase tracking-wider text-[#d27ab0] text-sm">
-              Not Legal Advice
-            </h4>
-            <p className="font-sans leading-relaxed text-xs text-slate-400">
-              This is a general reference, not legal advice.{" "}
-              <strong className="text-slate-300">
-                Leverage, jurisdiction, library type, and the specific resource being
-                licensed all change what is reasonable in your situation.
-              </strong>{" "}
-              When in doubt, consult counsel.
-            </p>
+          <div className="md:col-span-3">
+            <h2 className="text-xs font-black uppercase tracking-[0.14em] text-ink mb-3">Explore</h2>
+            <ul className="space-y-2 text-sm">
+              {NAV.map((n) => (
+                <li key={n.path}>
+                  <a className="hover:text-plum" href={to(n.path)}>
+                    {n.label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a className="hover:text-plum" href={SPREADSHEET_FILE} download>
+                  Download the spreadsheet (.xlsx)
+                </a>
+              </li>
+            </ul>
           </div>
-
-          {/* Column 3: Licensing */}
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="font-display text-white font-bold uppercase tracking-wider text-sm">
-              Creative Commons
-            </h4>
-            <p className="font-sans leading-relaxed text-xs text-slate-300">
-              Licensed for use under <strong>CC&nbsp;BY-4.0</strong>. Anyone may adapt,
-              remix, and republish this resource with attribution.
+          <div className="md:col-span-4">
+            <h2 className="text-xs font-black uppercase tracking-[0.14em] text-ink mb-3">Not legal advice</h2>
+            <p className="text-sm leading-relaxed text-ink/80">
+              This document is general reference, not legal advice. Leverage, jurisdiction, library type, and the
+              specific resource you’re licensing all change what’s reasonable in any given negotiation.
+              When you need it, consult counsel.
             </p>
           </div>
         </div>
-
-        <div className="pt-8 text-xs font-medium text-slate-400">
+        <div className="mt-10 pt-6 border-t border-line flex flex-col sm:flex-row gap-2 justify-between text-xs text-ink/70">
+          <span>© 2026 Library Futures / The Engelberg Center on Innovation Law &amp; Policy</span>
           <span>
-            © 2026 Library Futures / The Engelberg Center on Innovation Law &amp; Policy
+            Licensed for use under{" "}
+            <a className="underline underline-offset-2 hover:text-plum" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
+              CC-BY-4.0
+            </a>
           </span>
         </div>
       </div>

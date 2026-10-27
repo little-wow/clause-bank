@@ -30,7 +30,7 @@ export default function Logo({ variant = "color", heightClass = "h-9" }: LogoPro
   return (
     <span
       className={`font-black tracking-tight leading-none text-lg sm:text-xl select-none ${
-        variant === "light" ? "text-white" : "text-[#a80977]"
+        variant === "light" ? "text-white" : "text-plum"
       }`}
     >
       LIBRARY&nbsp;FUTURES
