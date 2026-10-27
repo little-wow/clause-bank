@@ -1,21 +1,22 @@
 import { useEffect } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import Companion from "./pages/Companion";
-import ClauseIndex from "./pages/ClauseIndex";
-import ClausePage from "./pages/ClausePage";
-import Spreadsheet from "./pages/Spreadsheet";
+import Finder from "./pages/Finder";
+import Table from "./pages/Table";
 import HowToUse from "./pages/HowToUse";
 import { useRoute } from "./router";
-import { BOOK_TITLE, COMPANION } from "./data";
 import { clauseById } from "./content";
+
+const SITE = "Digital Content Licensing Clause Bank";
 
 export default function App() {
   const { parts, anchor } = useRoute();
   const [section = "", sub] = parts;
+  const isFinder = section === "" || section === "clause";
 
-  // Scroll to an anchor (e.g. a chapter sub-section) or to the top on navigation.
+  // Changing pages starts at the top (or at an anchor). Opening clauses inside
+  // the finder doesn't change pageKey, so the finder keeps the list's place.
+  const pageKey = isFinder ? "finder" : section;
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       const el = anchor ? document.getElementById(anchor) : null;
@@ -23,46 +24,30 @@ export default function App() {
       else window.scrollTo({ top: 0 });
     });
     return () => cancelAnimationFrame(id);
-  }, [section, sub, anchor]);
+  }, [pageKey, anchor]);
 
   let page;
   let title = "";
-  switch (section) {
-    case "companion": {
-      const ch = COMPANION.find((s) => s.id === sub) ?? COMPANION[0];
-      title = ch.num ? `${ch.num}. ${ch.title}` : ch.title;
-      page = <Companion id={ch.id} />;
-      break;
-    }
-    case "clauses":
-      if (sub) {
-        title = clauseById.get(sub)?.topic ?? "Clause Bank";
-        page = <ClausePage id={sub} />;
-      } else {
-        title = "Clause Bank";
-        page = <ClauseIndex />;
-      }
-      break;
-    case "spreadsheet":
-      title = "Spreadsheet";
-      page = <Spreadsheet />;
-      break;
-    case "how-to-use":
-      title = "How to Use";
-      page = <HowToUse />;
-      break;
-    default:
-      page = <Home />;
+  if (section === "table") {
+    title = "Table";
+    page = <Table />;
+  } else if (section === "how-to-use") {
+    title = "How to Use";
+    page = <HowToUse />;
+  } else {
+    const c = section === "clause" && sub ? clauseById.get(sub) : undefined;
+    title = c ? `${c.topic} (${c.id})` : "";
+    page = <Finder selectedId={section === "clause" ? sub : undefined} />;
   }
 
   useEffect(() => {
-    document.title = title ? `${title} | ${BOOK_TITLE}` : BOOK_TITLE;
+    document.title = title ? `${title} | ${SITE}` : SITE;
   }, [title]);
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <Header section={section === "" || ["companion", "clauses", "spreadsheet", "how-to-use"].includes(section) ? section : ""} />
-      <main id="main" className="mx-auto w-full max-w-7xl flex-grow px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14">
+      <Header section={isFinder ? "" : section} />
+      <main id="main" className="mx-auto w-full max-w-[90rem] flex-grow px-4 pt-8 sm:px-6 sm:pt-10 lg:px-8">
         {page}
       </main>
       <Footer />

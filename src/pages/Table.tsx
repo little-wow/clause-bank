@@ -1,18 +1,12 @@
 import { Fragment, useMemo, useState } from "react";
 import { ArrowDown, ChevronDown, Download, Search } from "lucide-react";
-import { CLAUSES, COMPANION, PRIORITY_KEYS, PRIORITY_LABELS, THEME_ORDER } from "../data";
+import { CLAUSES, PRIORITY_KEYS, PRIORITY_LABELS, THEME_ORDER } from "../data";
 import type { Clause, PriorityKey } from "../data";
-import { Kicker, PageTitle, PillLink, PriorityMark, SPREADSHEET_FILE } from "../components/ui";
+import { Kicker, PageTitle, PillLink, PriorityMark } from "../components/ui";
+import { SPREADSHEET_FILE } from "../content";
 import { to } from "../router";
 
 const RANK = { H: 0, M: 1, "": 2 } as const;
-
-const priorityGuide = (() => {
-  for (const s of COMPANION)
-    for (const b of s.blocks)
-      if (b.k === "h2" && b.text.startsWith("Reading the Priority Columns")) return { chapter: s.id, anchor: b.id, text: b.text };
-  return null;
-})();
 
 function Detail({ c }: { c: Clause }) {
   return (
@@ -20,9 +14,9 @@ function Detail({ c }: { c: Clause }) {
       <div className="grid gap-4 lg:grid-cols-3">
         {(
           [
-            ["Common Pro-Vendor Language", c.proVendorParas, false],
-            ["Pro-Library Version", c.proLibraryParas, true],
-            ["Reasonable Fallback", c.fallbackParas, false],
+            ["Common Pro-Vendor Language", c.proVendor, false],
+            ["Pro-Library Version", c.proLibrary, true],
+            ["Reasonable Fallback", c.fallback, false],
           ] as const
         ).map(([label, paras, hl]) => (
           <div key={label} className={`rounded-xl p-4 ${hl ? "bg-blush border-2 border-blush-line" : "bg-white border-2 border-line"}`}>
@@ -49,19 +43,19 @@ function Detail({ c }: { c: Clause }) {
           </ul>
         </div>
       </div>
-      <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-bold">
-        <a className="text-plum underline underline-offset-4" href={to(`clauses/${c.id}`)}>
-          Open the clause page
+      <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 text-sm">
+        <a className="font-bold text-plum underline underline-offset-4" href={to(`clause/${c.id}`)}>
+          Open this clause
         </a>
-        <a className="text-plum underline underline-offset-4" href={to(`companion/${c.companionRef.chapter}`, c.companionRef.anchor)}>
-          Companion Doc Ref: {c.companionRef.label}
-        </a>
+        <span>
+          <span className="font-bold text-plum">Companion Doc Ref:</span> {c.companionRef}
+        </span>
       </div>
     </div>
   );
 }
 
-export default function Spreadsheet() {
+export default function Table() {
   const [q, setQ] = useState("");
   const [theme, setTheme] = useState("All");
   const [prio, setPrio] = useState<PriorityKey | null>(null);
@@ -100,21 +94,15 @@ export default function Spreadsheet() {
   return (
     <div>
       <div className="max-w-4xl">
-        <Kicker>Clause Bank Spreadsheet</Kicker>
-        <PageTitle>Spreadsheet</PageTitle>
+        <Kicker>Clause Bank</Kicker>
+        <PageTitle>Table</PageTitle>
         <p className="mt-5 text-[1.0625rem] leading-relaxed text-ink/80">
           All {CLAUSES.length} clauses in one table, with the five priority columns. Filter by a priority to
-          get the shortlist for one need, or read across a row to see how much rides on a single clause.
-          {priorityGuide && (
-            <>
-              {" "}
-              See{" "}
-              <a className="font-semibold text-plum underline underline-offset-4" href={to(`companion/${priorityGuide.chapter}`, priorityGuide.anchor)}>
-                {priorityGuide.text}
-              </a>
-              .
-            </>
-          )}
+          get the shortlist for one need, or read across a row to see how much rides on a single clause.{" "}
+          <a className="font-semibold text-plum underline underline-offset-4" href={to("how-to-use", "readme-notes-on-organization-priority")}>
+            How the priority columns work
+          </a>
+          .
         </p>
         <div className="mt-6">
           <PillLink href={SPREADSHEET_FILE} download>
@@ -248,7 +236,7 @@ export default function Spreadsheet() {
                   >
                     <td className={`sticky left-0 z-10 px-3 py-3 font-black text-plum ${isOpen ? "bg-blush" : zebra}`}>
                       {full ? (
-                        <a href={to(`clauses/${c.id}`)} className="underline underline-offset-4">{c.id}</a>
+                        <a href={to(`clause/${c.id}`)} className="underline underline-offset-4">{c.id}</a>
                       ) : (
                         <button
                           className="inline-flex items-center gap-1"
@@ -269,7 +257,7 @@ export default function Spreadsheet() {
                     <td className="px-3 py-3 text-ink/80">{c.section}</td>
                     {full && (
                       <>
-                        {[c.proVendorParas, c.proLibraryParas, c.fallbackParas].map((paras, j) => (
+                        {[c.proVendor, c.proLibrary, c.fallback].map((paras, j) => (
                           <td key={j} className={`px-3 py-3 text-sm leading-relaxed ${j === 1 ? "bg-blush/60" : ""}`}>
                             {paras.map((p, k) => (
                               <p key={k} className={k ? "mt-2" : ""}>{p}</p>
@@ -284,11 +272,7 @@ export default function Spreadsheet() {
                             ))}
                           </ul>
                         </td>
-                        <td className="px-3 py-3 text-sm">
-                          <a className="text-plum underline underline-offset-4" href={to(`companion/${c.companionRef.chapter}`, c.companionRef.anchor)}>
-                            {c.companionRef.label}
-                          </a>
-                        </td>
+                        <td className="px-3 py-3 text-sm">{c.companionRef}</td>
                       </>
                     )}
                     {PRIORITY_KEYS.map((k) => (

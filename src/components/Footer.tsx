@@ -1,12 +1,12 @@
 import Logo from "./Logo";
 import { NAV } from "./Header";
 import { to } from "../router";
-import { SPREADSHEET_FILE } from "./ui";
+import { BOOK_URL, SPREADSHEET_FILE } from "../content";
 
 export default function Footer() {
   return (
     <footer className="mt-24 bg-gradient-to-b from-paper to-white border-t border-[#ddd]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+      <div className="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5 space-y-4">
             <Logo heightClass="h-12" />
@@ -34,6 +34,11 @@ export default function Footer() {
                 </li>
               ))}
               <li>
+                <a className="hover:text-plum" href={BOOK_URL} target="_blank" rel="noopener noreferrer">
+                  Read the book (companion document)
+                </a>
+              </li>
+              <li>
                 <a className="hover:text-plum" href={SPREADSHEET_FILE} download>
                   Download the spreadsheet (.xlsx)
                 </a>
@@ -43,9 +48,9 @@ export default function Footer() {
           <div className="md:col-span-4">
             <h2 className="text-xs font-black uppercase tracking-[0.14em] text-ink mb-3">Not legal advice</h2>
             <p className="text-sm leading-relaxed text-ink/80">
-              This document is general reference, not legal advice. Leverage, jurisdiction, library type, and the
-              specific resource you’re licensing all change what’s reasonable in any given negotiation.
-              When you need it, consult counsel.
+              This workbook is a general reference, not legal advice. Leverage, jurisdiction, library type, and
+              the specific resource being licensed all change what is reasonable in your situation. When in
+              doubt, consult counsel.
             </p>
           </div>
         </div>
