@@ -96,7 +96,7 @@ export default function ClauseDetail({ clause, headingLevel = 2 }: { clause: Cla
 
       {Object.values(clause.priorities).some(Boolean) && (
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          <span className="text-[11px] font-black uppercase tracking-[0.12em] text-ink/60">{COPY.clause.priority}</span>
+          <span className="text-[11px] font-black uppercase tracking-[0.12em] text-ink/60">{COPY.clause.area}</span>
           <PriorityList priorities={clause.priorities} />
         </div>
       )}

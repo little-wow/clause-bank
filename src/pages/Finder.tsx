@@ -60,7 +60,7 @@ function ResultRow({
             <Marked text={c.topic} query={query} />
           </span>
           {prio && (
-            <span className="shrink-0" aria-label={`${PRIORITY_LABELS[prio]}: ${c.priorities[prio] === "H" ? "high" : "medium"}`}>
+            <span className="shrink-0" aria-label={`${PRIORITY_LABELS[prio]}: ${c.priorities[prio] === "H" ? "high priority" : "medium priority"}`}>
               <PriorityMark value={c.priorities[prio]} />
             </span>
           )}
@@ -200,8 +200,8 @@ export default function Finder({ selectedId }: { selectedId?: string }) {
               <option key={t}>{t}</option>
             ))}
           </select>
-          <select value={prio} onChange={(e) => setPrio(e.target.value as PriorityKey | "")} aria-label="Filter by priority" className="min-w-0 rounded-full border-2 border-line bg-white px-3 py-2 text-sm font-semibold focus:border-plum focus:outline-none">
-            <option value="">{COPY.finder.anyPriority}</option>
+          <select value={prio} onChange={(e) => setPrio(e.target.value as PriorityKey | "")} aria-label="Filter by area" className="min-w-0 rounded-full border-2 border-line bg-white px-3 py-2 text-sm font-semibold focus:border-plum focus:outline-none">
+            <option value="">{COPY.finder.anyArea}</option>
             {PRIORITY_KEYS.map((k) => (
               <option key={k} value={k}>
                 {PRIORITY_LABELS[k]}

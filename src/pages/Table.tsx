@@ -138,7 +138,7 @@ export default function Table() {
           </select>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-xs font-black uppercase tracking-[0.12em] text-ink/60">{COPY.table.priority}</span>
+          <span className="mr-1 text-xs font-black uppercase tracking-[0.12em] text-ink/60">{COPY.table.area}</span>
           {PRIORITY_KEYS.map((k) => (
             <button
               key={k}
