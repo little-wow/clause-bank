@@ -1,6 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "clause-bank",
+  // Jrh325@gmail.com's Account, which serves clause-bank.jrh325.workers.dev
+  "account_id": "8d8dcb87ac1199310740788eec839f9a",
+  "workers_dev": true,
   "compatibility_date": "2025-06-01",
   "assets": {
     "directory": "./dist",
