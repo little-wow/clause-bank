@@ -5,6 +5,7 @@ import type { Clause, PriorityKey } from "../data";
 import { Kicker, PageTitle, PillLink, PriorityMark } from "../components/ui";
 import { SPREADSHEET_FILE } from "../content";
 import { to } from "../router";
+import { COPY } from "../copy";
 
 const RANK = { H: 0, M: 1, "": 2 } as const;
 
@@ -45,7 +46,7 @@ function Detail({ c }: { c: Clause }) {
       </div>
       <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 text-sm">
         <a className="font-bold text-plum underline underline-offset-4" href={to(`clause/${c.id}`)}>
-          Open this clause
+          {COPY.table.openClause}
         </a>
         <span>
           <span className="font-bold text-plum">Companion Doc Ref:</span> {c.companionRef}
@@ -94,19 +95,18 @@ export default function Table() {
   return (
     <div>
       <div className="max-w-4xl">
-        <Kicker>Clause Bank</Kicker>
-        <PageTitle>Table</PageTitle>
+        <Kicker>{COPY.table.kicker}</Kicker>
+        <PageTitle>{COPY.table.title}</PageTitle>
         <p className="mt-5 text-[1.0625rem] leading-relaxed text-ink/80">
-          All {CLAUSES.length} clauses in one table, with the five priority columns. Filter by a priority to
-          get the shortlist for one need, or read across a row to see how much rides on a single clause.{" "}
+          {COPY.table.intro(CLAUSES.length)}{" "}
           <a className="font-semibold text-plum underline underline-offset-4" href={to("how-to-use", "readme-notes-on-organization-priority")}>
-            How the priority columns work
+            {COPY.table.priorityLink}
           </a>
           .
         </p>
         <div className="mt-6">
           <PillLink href={SPREADSHEET_FILE} download>
-            <Download className="h-4 w-4" /> Download the spreadsheet (.xlsx)
+            <Download className="h-4 w-4" /> {COPY.nav.download}
           </PillLink>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function Table() {
               type="search"
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Search all text"
+              placeholder={COPY.table.searchPlaceholder}
               aria-label="Search the spreadsheet"
               className="w-full rounded-full border-2 border-line bg-white py-2.5 pl-12 pr-4 focus:border-plum focus:outline-none"
             />
@@ -131,14 +131,14 @@ export default function Table() {
             aria-label="Theme"
             className="rounded-full border-2 border-line bg-white px-4 py-2.5 font-semibold focus:border-plum focus:outline-none"
           >
-            <option value="All">All themes</option>
+            <option value="All">{COPY.table.allThemes}</option>
             {THEME_ORDER.map((t) => (
               <option key={t}>{t}</option>
             ))}
           </select>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-xs font-black uppercase tracking-[0.12em] text-ink/60">Priority</span>
+          <span className="mr-1 text-xs font-black uppercase tracking-[0.12em] text-ink/60">{COPY.table.priority}</span>
           {PRIORITY_KEYS.map((k) => (
             <button
               key={k}
@@ -153,12 +153,12 @@ export default function Table() {
           ))}
           <label className="ml-1 inline-flex cursor-pointer items-center gap-2 text-sm font-semibold">
             <input type="checkbox" checked={highOnly} onChange={(e) => setHighOnly(e.target.checked)} className="h-4 w-4 accent-plum" />
-            High (H) only
+            {COPY.table.highOnly}
           </label>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4 text-sm">
           <span aria-live="polite">
-            Showing <strong>{rows.length}</strong> of {CLAUSES.length}
+            {COPY.table.showing(rows.length, CLAUSES.length)}
             {filtered && (
               <button
                 className="ml-3 font-bold text-plum underline underline-offset-4"
@@ -170,22 +170,22 @@ export default function Table() {
                   setSortKey(null);
                 }}
               >
-                Clear filters
+                {COPY.table.clearFilters}
               </button>
             )}
           </span>
           <label className="inline-flex cursor-pointer items-center gap-2 font-semibold">
             <input type="checkbox" checked={full} onChange={(e) => setFull(e.target.checked)} className="h-4 w-4 accent-plum" />
-            Show every column (full clause text, like the workbook)
+            {COPY.table.everyColumn}
           </label>
         </div>
       </div>
 
       {/* Legend */}
       <p className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink/80">
-        <span className="inline-flex items-center gap-2"><PriorityMark value="H" /> high priority</span>
-        <span className="inline-flex items-center gap-2"><PriorityMark value="M" /> medium priority</span>
-        <span>Click a priority heading to sort by it. {full ? "Click a clause ID to open it." : "Click a row to read the full clause."}</span>
+        <span className="inline-flex items-center gap-2"><PriorityMark value="H" /> {COPY.table.legendHigh}</span>
+        <span className="inline-flex items-center gap-2"><PriorityMark value="M" /> {COPY.table.legendMedium}</span>
+        <span>{COPY.table.hintSort} {full ? COPY.table.hintId : COPY.table.hintRow}</span>
       </p>
 
       {/* Table */}
@@ -296,7 +296,7 @@ export default function Table() {
             {rows.length === 0 && (
               <tr>
                 <td colSpan={colCount} className="px-4 py-10 text-center text-ink/70">
-                  No clauses match these filters.
+                  {COPY.table.noMatches}
                 </td>
               </tr>
             )}

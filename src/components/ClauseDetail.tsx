@@ -6,6 +6,7 @@ import type { Clause } from "../data";
 import { BOOK_URL } from "../content";
 import { PriorityList } from "./ui";
 import { to } from "../router";
+import { COPY } from "../copy";
 
 function useCopied(): [boolean, (text: string) => void] {
   const [done, setDone] = useState(false);
@@ -21,7 +22,7 @@ function useCopied(): [boolean, (text: string) => void] {
   return [done, copy];
 }
 
-function CopyButton({ text, label = "Copy" }: { text: string; label?: string }) {
+function CopyButton({ text, label = COPY.clause.copy }: { text: string; label?: string }) {
   const [done, copy] = useCopied();
   return (
     <button
@@ -29,7 +30,7 @@ function CopyButton({ text, label = "Copy" }: { text: string; label?: string }) 
       className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-ink/60 hover:bg-white hover:text-plum"
     >
       {done ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-      {done ? "Copied" : label}
+      {done ? COPY.clause.copied : label}
     </button>
   );
 }
@@ -88,14 +89,14 @@ export default function ClauseDetail({ clause, headingLevel = 2 }: { clause: Cla
             className="inline-flex items-center gap-1.5 rounded-full border-2 border-line px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink hover:border-plum hover:text-plum"
           >
             {linkCopied ? <Check className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />}
-            {linkCopied ? "Link copied" : "Copy link"}
+            {linkCopied ? COPY.clause.linkCopied : COPY.clause.copyLink}
           </button>
         </div>
       </dl>
 
       {Object.values(clause.priorities).some(Boolean) && (
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          <span className="text-[11px] font-black uppercase tracking-[0.12em] text-ink/60">Priority</span>
+          <span className="text-[11px] font-black uppercase tracking-[0.12em] text-ink/60">{COPY.clause.priority}</span>
           <PriorityList priorities={clause.priorities} />
         </div>
       )}
@@ -120,7 +121,7 @@ export default function ClauseDetail({ clause, headingLevel = 2 }: { clause: Cla
         <p>
           {clause.companionRef}{" "}
           <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-plum underline underline-offset-4">
-            in the companion document <ExternalLink className="h-3.5 w-3.5" />
+            {COPY.clause.inCompanion} <ExternalLink className="h-3.5 w-3.5" />
           </a>
         </p>
       </Field>

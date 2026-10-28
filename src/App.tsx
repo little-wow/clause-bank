@@ -6,8 +6,9 @@ import Table from "./pages/Table";
 import HowToUse from "./pages/HowToUse";
 import { useRoute } from "./router";
 import { clauseById } from "./content";
+import { COPY } from "./copy";
 
-const SITE = "Digital Content Licensing Clause Bank";
+const SITE = COPY.site.name;
 
 export default function App() {
   const { parts, anchor } = useRoute();
@@ -29,10 +30,10 @@ export default function App() {
   let page;
   let title = "";
   if (section === "table") {
-    title = "Table";
+    title = COPY.table.title;
     page = <Table />;
   } else if (section === "how-to-use") {
-    title = "How to Use";
+    title = COPY.howTo.title;
     page = <HowToUse />;
   } else {
     const c = section === "clause" && sub ? clauseById.get(sub) : undefined;

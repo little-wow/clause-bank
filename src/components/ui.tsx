@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { PRIORITY_KEYS, PRIORITY_LABELS } from "../data";
 import type { Priority, PriorityKey } from "../data";
+import { COPY } from "../copy";
 
 /** Small uppercase label above a title. */
 export function Kicker({ children }: { children: ReactNode }) {
@@ -75,8 +76,8 @@ export function PriorityList({ priorities }: { priorities: Record<PriorityKey, P
             priorities[k] === "H" ? "bg-plum text-white" : "bg-blush text-plum-dark"
           }`}
         >
-          {PRIORITY_LABELS[k]}
-          <span className="font-black">{priorities[k] === "H" ? "· High" : "· Medium"}</span>
+          {PRIORITY_LABELS[k]}{" "}
+          <span className="font-black">· {priorities[k] === "H" ? COPY.clause.high : COPY.clause.medium}</span>
         </li>
       ))}
     </ul>

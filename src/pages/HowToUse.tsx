@@ -4,6 +4,7 @@ import { LAST_UPDATED, README_SECTIONS, SUBTITLE, THEME_INDEX_INTRO, THEME_INDEX
 import { Kicker, PageTitle } from "../components/ui";
 import { CLAUSE_ID_RE, SPREADSHEET_FILE, clauseById, clausesByTheme } from "../content";
 import { to } from "../router";
+import { COPY } from "../copy";
 
 const LABEL = /^([A-Z][A-Za-z'’\- ?]{2,45}):\s+(.+)$/;
 const slug = (s: string) => "readme-" + s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -46,18 +47,18 @@ export default function HowToUse() {
   const important = README_SECTIONS.find((s) => s.heading === "IMPORTANT!");
   const about = README_SECTIONS.find((s) => s.heading === "About");
   const body = README_SECTIONS.filter((s) => s !== important && s !== about);
-  const onPage = [...body.map((s) => s.heading), "Important", THEME_INDEX_TITLE, "About"];
+  const onPage = [...body.map((s) => s.heading), COPY.howTo.importantLink, THEME_INDEX_TITLE, "About"];
 
   return (
     <div className="max-w-3xl">
-      <Kicker>From the spreadsheet’s Read Me First tab</Kicker>
-      <PageTitle>How to Use</PageTitle>
+      <Kicker>{COPY.howTo.kicker}</Kicker>
+      <PageTitle>{COPY.howTo.title}</PageTitle>
       <p className="mt-5 text-lg font-bold text-ink">{TITLE}</p>
       <p className="mt-1 text-lg leading-relaxed text-ink/80">{SUBTITLE}</p>
       <p className="mt-2 text-sm font-semibold text-ink/60">{LAST_UPDATED}</p>
 
       <nav aria-label="On this page" className="mt-10 rounded-2xl bg-blush p-5 sm:p-6">
-        <h2 className="mb-3 text-xs font-black uppercase tracking-[0.14em] text-ink">On this page</h2>
+        <h2 className="mb-3 text-xs font-black uppercase tracking-[0.14em] text-ink">{COPY.howTo.onThisPage}</h2>
         <ul className="grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
           {onPage.map((h) => (
             <li key={h}>
@@ -78,7 +79,7 @@ export default function HowToUse() {
           {s.heading === "Color Coding" && (
             <p className="mt-4 text-sm">
               <a className="font-semibold text-plum underline underline-offset-4" href={SPREADSHEET_FILE} download>
-                Download the spreadsheet (.xlsx)
+                {COPY.nav.download}
               </a>
             </p>
           )}
@@ -86,7 +87,7 @@ export default function HowToUse() {
       ))}
 
       {important && (
-        <section id={slug("Important")} className="mt-14 rounded-2xl border-2 border-plum bg-blush p-6 sm:p-8">
+        <section id={slug(COPY.howTo.importantLink)} className="mt-14 rounded-2xl border-2 border-plum bg-blush p-6 sm:p-8">
           <h2 className="mb-4 flex items-center gap-2 text-2xl font-black uppercase tracking-tight text-plum">
             <AlertTriangle className="h-6 w-6" aria-hidden /> {important.heading}
           </h2>
