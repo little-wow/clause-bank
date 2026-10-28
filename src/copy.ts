@@ -23,7 +23,7 @@ export const COPY = {
   finder: {
     kicker: "Clause Bank",
     title: "Find a clause",
-    searchPlaceholder: "Search by topic, ID, or any word",
+    searchPlaceholder: "Search by topic, ID, or word",
     allThemes: "All themes",
     anyPriority: "Any priority",
     highAndMedium: "High and Medium",
@@ -57,7 +57,7 @@ export const COPY = {
     kicker: "Clause Bank",
     title: "Table",
     intro: (total: number) =>
-      `All ${total} clauses in one table, with the five priority columns. Filter by a priority to get the shortlist for one need, or read across a row to see how much rides on a single clause.`,
+      `All ${total} clauses in one table, with five priority columns. Filter by a priority to get the shortlist for one need, or read across a row to see the entire clause.`,
     priorityLink: "How the priority columns work",
     searchPlaceholder: "Search all text",
     allThemes: "All themes",
@@ -65,7 +65,7 @@ export const COPY = {
     highOnly: "High (H) only",
     showing: (n: number, total: number) => `Showing ${n} of ${total}`,
     clearFilters: "Clear filters",
-    everyColumn: "Show every column (full clause text, like the workbook)",
+    everyColumn: "Show every column (full clause text)",
     legendHigh: "high priority",
     legendMedium: "medium priority",
     hintSort: "Click a priority heading to sort by it.",
