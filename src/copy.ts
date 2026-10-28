@@ -62,7 +62,7 @@ export const COPY = {
     searchPlaceholder: "Search all text",
     allThemes: "All themes",
     priority: "Priority",
-    highOnly: "High (H) only",
+    highOnly: "High (H) priority only",
     showing: (n: number, total: number) => `Showing ${n} of ${total}`,
     clearFilters: "Clear filters",
     everyColumn: "Show every column (full clause text)",
