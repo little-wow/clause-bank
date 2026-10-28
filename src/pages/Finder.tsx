@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, Search, X } from "lucide-react";
-import { CLAUSES, LAST_UPDATED, PRIORITY_KEYS, PRIORITY_LABELS, README_SECTIONS, THEME_ORDER } from "../data";
+import { CLAUSES, PRIORITY_KEYS, PRIORITY_LABELS, README_SECTIONS, THEME_ORDER } from "../data";
 import type { PriorityKey } from "../data";
 import { clauseById } from "../content";
 import { highlight, search } from "../search";
@@ -171,7 +171,7 @@ export default function Finder({ selectedId }: { selectedId?: string }) {
 
   const list = (
     <div className={selected ? "hidden lg:block" : ""}>
-      <p className="text-xs sm:text-[13px] font-bold uppercase tracking-[0.14em] text-plum">{COPY.finder.kicker} · {LAST_UPDATED}</p>
+      <p className="text-xs sm:text-[13px] font-bold uppercase tracking-[0.14em] text-plum">{COPY.finder.kicker}</p>
       <h1 className="mt-2 text-3xl sm:text-4xl font-black uppercase leading-[0.95] tracking-tight text-ink">{COPY.finder.title}</h1>
 
       <div className="sticky top-20 z-10 -mx-1 bg-white px-1 pb-3 pt-5">

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { AlertTriangle } from "lucide-react";
-import { LAST_UPDATED, README_SECTIONS, SUBTITLE, THEME_INDEX_INTRO, THEME_INDEX_TITLE, TITLE } from "../data";
+import { README_SECTIONS, SUBTITLE, THEME_INDEX_INTRO, THEME_INDEX_TITLE, TITLE } from "../data";
 import { Kicker, PageTitle } from "../components/ui";
 import { CLAUSE_ID_RE, SPREADSHEET_FILE, clauseById, clausesByTheme } from "../content";
 import { to } from "../router";
@@ -55,7 +55,6 @@ export default function HowToUse() {
       <PageTitle>{COPY.howTo.title}</PageTitle>
       <p className="mt-5 text-lg font-bold text-ink">{TITLE}</p>
       <p className="mt-1 text-lg leading-relaxed text-ink/80">{SUBTITLE}</p>
-      <p className="mt-2 text-sm font-semibold text-ink/60">{LAST_UPDATED}</p>
 
       <nav aria-label="On this page" className="mt-10 rounded-2xl bg-blush p-5 sm:p-6">
         <h2 className="mb-3 text-xs font-black uppercase tracking-[0.14em] text-ink">{COPY.howTo.onThisPage}</h2>

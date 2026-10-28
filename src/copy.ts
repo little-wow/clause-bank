@@ -21,7 +21,7 @@ export const COPY = {
   },
 
   finder: {
-    kicker: "Clause Bank", // shown before the "Last updated" date
+    kicker: "Clause Bank",
     title: "Find a clause",
     searchPlaceholder: "Search by topic, ID, or any word",
     allThemes: "All themes",
@@ -29,7 +29,7 @@ export const COPY = {
     highAndMedium: "High and Medium",
     highOnly: "High only",
     explainHighAndMedium: (p: string) =>
-      `Clauses marked H (high) or M (medium) for ${p}. Clauses left blank in that column are hidden.`,
+      `Clauses marked H (high) or M (medium) for ${p}.`,
     explainHighOnly: (p: string) => `Clauses marked H (high priority) for ${p}.`,
     countAll: (total: number) => `${total} clauses by theme`,
     countFiltered: (n: number, total: number) => `${n} of ${total} clauses`,
